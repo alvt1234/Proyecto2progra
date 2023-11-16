@@ -80,7 +80,7 @@ public class LoginTwitter extends javax.swing.JFrame {
         panelfondoLayout.setHorizontalGroup(
             panelfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelfondoLayout.createSequentialGroup()
-                .addContainerGap(1031, Short.MAX_VALUE)
+                .addContainerGap(1043, Short.MAX_VALUE)
                 .addGroup(panelfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btiniciarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
