@@ -1,8 +1,10 @@
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -31,6 +33,29 @@ public class LoginTwitter extends javax.swing.JFrame {
 
     }
 
+    private ImageIcon crearImagenSemitransparente(String ruta) {
+    ImageIcon image = new ImageIcon(ruta);
+    Image imagenOriginal = image.getImage();
+    
+    // Crear una imagen con transparencia
+    BufferedImage imagenTransparente = new BufferedImage(imagenOriginal.getWidth(null), imagenOriginal.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+    Graphics g = imagenTransparente.getGraphics();
+    g.drawImage(imagenOriginal, 0, 0, null);
+
+    for (int y = 0; y < imagenTransparente.getHeight(); y++) {
+        for (int x = 0; x < imagenTransparente.getWidth(); x++) {
+            int rgb = imagenTransparente.getRGB(x, y);
+            rgb = (rgb & 0x00FFFFFF) | (128 << 24); 
+            imagenTransparente.setRGB(x, y, rgb);
+        }
+    }
+
+    // Crear un ImageIcon con la imagen semitransparente
+    ImageIcon iconoTransparente = new ImageIcon(imagenTransparente);
+    g.dispose();
+
+    return iconoTransparente;
+}
     private void aggimagen(JLabel label, String ruta){
         ImageIcon image=new ImageIcon(ruta);
         Icon icono= new ImageIcon(image.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
@@ -123,7 +148,18 @@ public class LoginTwitter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btregistrarActionPerformed
-       JOptionPane.showMessageDialog(null, "hola");
+       CrearCuenta cuenta=new CrearCuenta();
+      ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
+       Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
+    labelfondo.setIcon(icono);
+ 
+     cuenta.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosed(WindowEvent e) {
+            aggimagen(labelfondo, "src/imagentwitter/twitter.png");
+        }
+    });
+        cuenta.setVisible(true);
     }//GEN-LAST:event_btregistrarActionPerformed
 
     private void btiniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btiniciarsesionActionPerformed
