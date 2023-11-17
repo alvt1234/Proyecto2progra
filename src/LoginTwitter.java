@@ -8,10 +8,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-
-
 
 public class LoginTwitter extends javax.swing.JFrame {
        int anchoPantalla,altoPantalla ;
@@ -148,10 +144,10 @@ public class LoginTwitter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btregistrarActionPerformed
-       CrearCuenta cuenta=new CrearCuenta();
+      CrearCuenta cuenta=new CrearCuenta();
       ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
-       Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
-    labelfondo.setIcon(icono);
+      Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
+      labelfondo.setIcon(icono);
  
      cuenta.addWindowListener(new WindowAdapter() {
         @Override
@@ -163,7 +159,18 @@ public class LoginTwitter extends javax.swing.JFrame {
     }//GEN-LAST:event_btregistrarActionPerformed
 
     private void btiniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btiniciarsesionActionPerformed
-        JOptionPane.showMessageDialog(null, "inicio");
+       IniciarSesion sesion=new IniciarSesion(this);
+        ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
+      Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
+      labelfondo.setIcon(icono);
+ 
+     sesion.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosed(WindowEvent e) {
+            aggimagen(labelfondo, "src/imagentwitter/twitter.png");
+        }
+    });
+     sesion.setVisible(true);
     }//GEN-LAST:event_btiniciarsesionActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
