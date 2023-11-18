@@ -1,6 +1,17 @@
 
-public class IniciarSesion extends javax.swing.JFrame {
+import java.awt.Color;
+import java.io.File;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
+
+public class IniciarSesion extends javax.swing.JFrame {
+    CrearCuenta cuenta=new CrearCuenta();
+     Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
+    Color colorPersonalizado = new Color(0, 153, 255);
+    Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
+    private String user,contra;
     private LoginTwitter login;
     public IniciarSesion(LoginTwitter login) {
         initComponents();
@@ -14,10 +25,10 @@ public class IniciarSesion extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lbuser = new javax.swing.JLabel();
         txtuser = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        lbcontra = new javax.swing.JLabel();
+        txtcontra = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         btsiguiente1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -30,8 +41,8 @@ public class IniciarSesion extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel4.setText("Username:");
+        lbuser.setForeground(new java.awt.Color(0, 153, 255));
+        lbuser.setText("Username:");
 
         txtuser.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
         txtuser.setToolTipText("");
@@ -39,10 +50,10 @@ public class IniciarSesion extends javax.swing.JFrame {
         txtuser.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(51, 153, 255)));
         txtuser.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jLabel3.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel3.setText("Contraseña:");
+        lbcontra.setForeground(new java.awt.Color(0, 153, 255));
+        lbcontra.setText("Contraseña:");
 
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 255)));
+        txtcontra.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 255)));
 
         jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jButton2.setText("X");
@@ -101,10 +112,10 @@ public class IniciarSesion extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(167, 167, 167)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcontra)
+                            .addComponent(lbuser, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(147, 147, 147)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -126,13 +137,13 @@ public class IniciarSesion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jLabel4)
+                .addComponent(lbuser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(lbcontra)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
@@ -168,18 +179,43 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btsiguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsiguiente1ActionPerformed
-      
-        MenuTwitter menu=new MenuTwitter();
+
+         user=txtuser.getText();
+         contra=new String(txtcontra.getPassword());
+         
+        if(txtuser.getText().isEmpty() || txtcontra.getText().isEmpty() ){
+        
+        if(txtuser.getText().isEmpty()){
+            txtuser.setBorder(bordeRojo);
+            lbuser.setForeground(Color.red);
+        }if(txtcontra.getText().isEmpty()){
+            txtcontra.setBorder(bordeRojo);
+            lbcontra.setForeground(Color.red);
+        }
+        JOptionPane.showMessageDialog(null, "llene todos los campos");
+           txtuser.setBorder(bordePersonalizado);
+           lbuser.setForeground(new Color(0, 153, 255));  
+           txtcontra.setBorder(bordePersonalizado);
+           lbcontra.setForeground(new Color(0, 153, 255)); 
+        }else{
+           if(buscarUsuario(user)){ 
+       MenuTwitter menu=new MenuTwitter();
        menu.setVisible(true);
-       
        dispose();
        login.dispose();
-       
+           }else
+               JOptionPane.showMessageDialog(null, "Usuario Inexistente");
+        }
        
     }//GEN-LAST:event_btsiguiente1ActionPerformed
 
+    public static boolean buscarUsuario(String username) {
+        File buscaruser = new File(username);
+        return buscaruser.exists() && buscaruser.isDirectory();
+    }
+
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        CrearCuenta cuenta=new CrearCuenta();
+        
         cuenta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
@@ -191,12 +227,12 @@ public class IniciarSesion extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel lbcontra;
+    private javax.swing.JLabel lbuser;
+    private javax.swing.JPasswordField txtcontra;
     private javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }

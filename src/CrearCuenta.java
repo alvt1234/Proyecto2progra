@@ -1,5 +1,7 @@
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,15 +15,15 @@ public class CrearCuenta extends javax.swing.JFrame {
 
     private String name,genero,user,contra,edadS;
     private int edad;
+    private char generoselected;
     Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
     Color colorPersonalizado = new Color(0, 153, 255);
     Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
     public CrearCuenta() {
         initComponents();
         this.setLocationRelativeTo(null);
-         name=txtnombre.getText();
-         user=txtuser.getText();
-         edadS=txtedad.getText();
+         
+         
     }
 
     @SuppressWarnings("unchecked")
@@ -188,8 +190,24 @@ public class CrearCuenta extends javax.swing.JFrame {
      dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private static void folderuser(String username){
+        File folderuser = new File(username);
+        if(!folderuser.exists()){
+            folderuser.mkdirs();
+            System.out.println("entra");
+            System.out.println("Ruta del directorio: " + folderuser.getAbsolutePath());
+            try{
+            new File(username + "/following.twc").createNewFile();
+            new File(username + "/followers.twc").createNewFile();
+            new File(username + "/twits.twc").createNewFile();
+            }catch(IOException e){
+                
+            }
+        }else
+            JOptionPane.showMessageDialog(null, "Ya existe este usuario");
+    }
     private void btsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsiguienteActionPerformed
-       if(txtnombre.getText().isEmpty() || txtuser.getText().isEmpty() || txtcontra.getText().isEmpty() || txtedad.getText().isEmpty()){
+       if(txtnombre.getText().isEmpty() || txtuser.getText().isEmpty() || txtcontra.getText().isEmpty() || txtedad.getText().isEmpty() || cbgenero.getSelectedItem().equals("Opcion")){
         if(txtnombre.getText().isEmpty()){
             txtnombre.setBorder(bordeRojo);
             lbnombre.setForeground(Color.red);
@@ -202,8 +220,13 @@ public class CrearCuenta extends javax.swing.JFrame {
         }if(txtedad.getText().isEmpty()){
             txtedad.setBorder(bordeRojo);
             lbedad.setForeground(Color.red);
+        }if(cbgenero.getSelectedItem()==null || cbgenero.getSelectedItem().equals("Opcion")){
+            cbgenero.setBorder(bordeRojo);
+            lbgenero.setForeground(Color.red);
         }
          JOptionPane.showMessageDialog(null, "llene todos los campos");
+           cbgenero.setBorder(bordePersonalizado);
+           lbgenero.setForeground(new Color(0, 153, 255));  
            txtnombre.setBorder(bordePersonalizado);
            lbnombre.setForeground(new Color(0, 153, 255));
            txtuser.setBorder(bordePersonalizado);
@@ -213,13 +236,45 @@ public class CrearCuenta extends javax.swing.JFrame {
            txtedad.setBorder(bordePersonalizado);
            lbedad.setForeground(new Color(0, 153, 255)); 
        }else{
+           try{
+         name=txtnombre.getText();
+         user=txtuser.getText();
+         contra=new String(txtcontra.getPassword());
+         genero = (String) cbgenero.getSelectedItem();
+         edadS=txtedad.getText();
+        edad=Integer.parseInt(edadS);
+        generoselected = genero.charAt(0);
         Date fechaActual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String fechaEntrada = dateFormat.format(fechaActual);
-        System.out.println("fecha: "+fechaEntrada);
+        System.out.println("user"+user+" contra "+contra);
+        UsuariosTwitter users=new UsuariosTwitter(name, generoselected, user, contra,edad, true);
+        File folderuser = new File(user);
+        if(!folderuser.exists()){
+            folderuser.mkdirs();
+            System.out.println("entra");
+            System.out.println("Ruta del directorio: " + folderuser.getAbsolutePath());
+            try{
+            new File(user + "/following.twc").createNewFile();
+            new File(user + "/followers.twc").createNewFile();
+            new File(user + "/twits.twc").createNewFile();
+            }catch(IOException e){
+       
+            }
         Foto foto=new Foto();
         foto.setVisible(true);
-        dispose();
+        dispose(); 
+        }else{
+            txtuser.setBorder(bordeRojo);
+            lbuser.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Ya existe este usuario");
+           txtuser.setBorder(bordePersonalizado);
+           lbuser.setForeground(new Color(0, 153, 255)); 
+        }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Ingrese un numero en la edad");
+            txtedad.setText("");
+        }
       }
     }//GEN-LAST:event_btsiguienteActionPerformed
 
