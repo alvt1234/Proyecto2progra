@@ -1,11 +1,27 @@
 
+import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+
+
 
 public class CrearCuenta extends javax.swing.JFrame {
 
+    private String name,genero,user,contra,edadS;
+    private int edad;
+    Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
+    Color colorPersonalizado = new Color(0, 153, 255);
+    Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
     public CrearCuenta() {
         initComponents();
         this.setLocationRelativeTo(null);
-         
+         name=txtnombre.getText();
+         user=txtuser.getText();
+         edadS=txtedad.getText();
     }
 
     @SuppressWarnings("unchecked")
@@ -16,14 +32,14 @@ public class CrearCuenta extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbnombre = new javax.swing.JLabel();
+        lbcontra = new javax.swing.JLabel();
         txtuser = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
+        lbuser = new javax.swing.JLabel();
+        txtcontra = new javax.swing.JPasswordField();
+        lbgenero = new javax.swing.JLabel();
         cbgenero = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        lbedad = new javax.swing.JLabel();
         txtedad = new javax.swing.JTextField();
         btsiguiente = new javax.swing.JButton();
 
@@ -51,11 +67,11 @@ public class CrearCuenta extends javax.swing.JFrame {
         txtnombre.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(51, 153, 255)));
         txtnombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jLabel2.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel2.setText("Nombre Completo:");
+        lbnombre.setForeground(new java.awt.Color(0, 153, 255));
+        lbnombre.setText("Nombre Completo:");
 
-        jLabel3.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel3.setText("Contraseña:");
+        lbcontra.setForeground(new java.awt.Color(0, 153, 255));
+        lbcontra.setText("Contraseña:");
 
         txtuser.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
         txtuser.setToolTipText("");
@@ -63,19 +79,19 @@ public class CrearCuenta extends javax.swing.JFrame {
         txtuser.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(51, 153, 255)));
         txtuser.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jLabel4.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel4.setText("Username:");
+        lbuser.setForeground(new java.awt.Color(0, 153, 255));
+        lbuser.setText("Username:");
 
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 255)));
+        txtcontra.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 255)));
 
-        jLabel5.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel5.setText("Genero:");
+        lbgenero.setForeground(new java.awt.Color(0, 153, 255));
+        lbgenero.setText("Genero:");
 
         cbgenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opcion", "F", "M" }));
         cbgenero.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 255), new java.awt.Color(0, 153, 255)));
 
-        jLabel6.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel6.setText("Edad:");
+        lbedad.setForeground(new java.awt.Color(0, 153, 255));
+        lbedad.setText("Edad:");
 
         txtedad.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
         txtedad.setToolTipText("");
@@ -103,19 +119,19 @@ public class CrearCuenta extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbgenero, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbgenero, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbedad, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(196, 196, 196))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcontra)
+                            .addComponent(lbuser, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtuser, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtnombre)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(txtedad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(303, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -130,23 +146,23 @@ public class CrearCuenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(lbnombre)
                 .addGap(4, 4, 4)
                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addComponent(lbgenero)
                 .addGap(1, 1, 1)
                 .addComponent(cbgenero, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(lbuser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(lbcontra)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(lbedad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
@@ -173,9 +189,38 @@ public class CrearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsiguienteActionPerformed
-      Foto foto=new Foto();
-      foto.setVisible(true);
-      dispose();
+       if(txtnombre.getText().isEmpty() || txtuser.getText().isEmpty() || txtcontra.getText().isEmpty() || txtedad.getText().isEmpty()){
+        if(txtnombre.getText().isEmpty()){
+            txtnombre.setBorder(bordeRojo);
+            lbnombre.setForeground(Color.red);
+        }if(txtuser.getText().isEmpty()){
+            txtuser.setBorder(bordeRojo);
+            lbuser.setForeground(Color.red);
+        }if(txtcontra.getText().isEmpty()){
+            txtcontra.setBorder(bordeRojo);
+            lbcontra.setForeground(Color.red);
+        }if(txtedad.getText().isEmpty()){
+            txtedad.setBorder(bordeRojo);
+            lbedad.setForeground(Color.red);
+        }
+         JOptionPane.showMessageDialog(null, "llene todos los campos");
+           txtnombre.setBorder(bordePersonalizado);
+           lbnombre.setForeground(new Color(0, 153, 255));
+           txtuser.setBorder(bordePersonalizado);
+           lbuser.setForeground(new Color(0, 153, 255));  
+           txtcontra.setBorder(bordePersonalizado);
+           lbcontra.setForeground(new Color(0, 153, 255)); 
+           txtedad.setBorder(bordePersonalizado);
+           lbedad.setForeground(new Color(0, 153, 255)); 
+       }else{
+        Date fechaActual = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaEntrada = dateFormat.format(fechaActual);
+        System.out.println("fecha: "+fechaEntrada);
+        Foto foto=new Foto();
+        foto.setVisible(true);
+        dispose();
+      }
     }//GEN-LAST:event_btsiguienteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -183,13 +228,13 @@ public class CrearCuenta extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbgenero;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel lbcontra;
+    private javax.swing.JLabel lbedad;
+    private javax.swing.JLabel lbgenero;
+    private javax.swing.JLabel lbnombre;
+    private javax.swing.JLabel lbuser;
+    private javax.swing.JPasswordField txtcontra;
     private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtuser;

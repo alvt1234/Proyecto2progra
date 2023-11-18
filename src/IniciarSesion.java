@@ -181,7 +181,7 @@ public class IniciarSesion extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         CrearCuenta cuenta=new CrearCuenta();
         cuenta.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
    
