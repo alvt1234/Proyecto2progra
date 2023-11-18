@@ -145,11 +145,8 @@ public class LoginTwitter extends javax.swing.JFrame {
 
     private void btregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btregistrarActionPerformed
       CrearCuenta cuenta=new CrearCuenta();
-      ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
-      Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
-      labelfondo.setIcon(icono);
- 
-     cuenta.addWindowListener(new WindowAdapter() {
+      crearimage();
+      cuenta.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosed(WindowEvent e) {
             aggimagen(labelfondo, "src/imagentwitter/twitter.png");
@@ -160,11 +157,8 @@ public class LoginTwitter extends javax.swing.JFrame {
 
     private void btiniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btiniciarsesionActionPerformed
        IniciarSesion sesion=new IniciarSesion(this);
-        ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
-      Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
-      labelfondo.setIcon(icono);
- 
-     sesion.addWindowListener(new WindowAdapter() {
+       crearimage();
+       sesion.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosed(WindowEvent e) {
             aggimagen(labelfondo, "src/imagentwitter/twitter.png");
@@ -173,6 +167,11 @@ public class LoginTwitter extends javax.swing.JFrame {
      sesion.setVisible(true);
     }//GEN-LAST:event_btiniciarsesionActionPerformed
 
+    private void crearimage(){
+      ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
+      Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
+      labelfondo.setIcon(icono);   
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
