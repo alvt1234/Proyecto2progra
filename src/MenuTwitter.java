@@ -1,6 +1,5 @@
 
 import java.awt.Color;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 
@@ -19,8 +18,6 @@ public class MenuTwitter extends javax.swing.JFrame {
         lupaA ="src/imagentwitter/lupa_azul.png";
         campana="src/imagentwitter/campana.png";
         campanaA="src/imagentwitter/campana_azul.png";
-        sobre ="src/imagentwitter/sobre.png";
-        sobreA ="src/imagentwitter/sobre_azul.png";
         gente="src/imagentwitter/gente.png";
         genteA="src/imagentwitter/gente_azul.png";
         user="src/imagentwitter/user.png";
@@ -40,9 +37,7 @@ public class MenuTwitter extends javax.swing.JFrame {
         bthogar = new javax.swing.JButton();
         btexplorar = new javax.swing.JButton();
         btnotificacion = new javax.swing.JButton();
-        btmsj = new javax.swing.JButton();
         btliza = new javax.swing.JButton();
-        btcomunidad = new javax.swing.JButton();
         btuser = new javax.swing.JButton();
         btmas = new javax.swing.JButton();
         bttweet = new javax.swing.JButton();
@@ -93,18 +88,6 @@ public class MenuTwitter extends javax.swing.JFrame {
             }
         });
 
-        btmsj.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btmsj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/sobre.png"))); // NOI18N
-        btmsj.setText(" MENSAJES");
-        btmsj.setBorderPainted(false);
-        btmsj.setContentAreaFilled(false);
-        btmsj.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btmsj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btmsjActionPerformed(evt);
-            }
-        });
-
         btliza.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btliza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/lista2.png"))); // NOI18N
         btliza.setText(" LIZA");
@@ -114,18 +97,6 @@ public class MenuTwitter extends javax.swing.JFrame {
         btliza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btlizaActionPerformed(evt);
-            }
-        });
-
-        btcomunidad.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btcomunidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/gente.png"))); // NOI18N
-        btcomunidad.setText(" COMUNIDADES");
-        btcomunidad.setBorderPainted(false);
-        btcomunidad.setContentAreaFilled(false);
-        btcomunidad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btcomunidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btcomunidadActionPerformed(evt);
             }
         });
 
@@ -174,16 +145,15 @@ public class MenuTwitter extends javax.swing.JFrame {
                             .addComponent(btmas)
                             .addComponent(btuser)
                             .addComponent(btliza)
-                            .addComponent(btmsj)
                             .addComponent(btnotificacion)
                             .addComponent(btexplorar)
-                            .addComponent(bthogar)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btcomunidad))))
+                            .addComponent(bthogar)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,18 +168,14 @@ public class MenuTwitter extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnotificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btmsj, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btliza, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btcomunidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btuser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btmas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(26, 26, 26)
                 .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -278,23 +244,11 @@ public class MenuTwitter extends javax.swing.JFrame {
         btnotificacion.setIcon(new ImageIcon(campanaA));
     }//GEN-LAST:event_btnotificacionActionPerformed
 
-    private void btmsjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmsjActionPerformed
-        botonesblack();
-        btmsj.setForeground(new Color(0, 153, 255));
-        btmsj.setIcon(new ImageIcon(sobreA));
-    }//GEN-LAST:event_btmsjActionPerformed
-
     private void btlizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlizaActionPerformed
         botonesblack();
         btliza.setForeground(new Color(0, 153, 255));
         btliza.setIcon(new ImageIcon(listaA));
     }//GEN-LAST:event_btlizaActionPerformed
-
-    private void btcomunidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcomunidadActionPerformed
-        botonesblack();
-        btcomunidad.setForeground(new Color(0, 153, 255));
-        btcomunidad.setIcon(new ImageIcon(genteA));
-    }//GEN-LAST:event_btcomunidadActionPerformed
 
     private void btuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btuserActionPerformed
         botonesblack();
@@ -317,29 +271,23 @@ public class MenuTwitter extends javax.swing.JFrame {
         btliza.setIcon(new ImageIcon(lista));
        btmas.setIcon(new ImageIcon(mas));
        btuser.setIcon(new ImageIcon(user));
-       btcomunidad.setIcon(new ImageIcon(gente));
-       btmsj.setIcon(new ImageIcon(sobre));
        bthogar.setIcon(new ImageIcon(image1));
        btexplorar.setIcon(new ImageIcon(lupan));
        btnotificacion.setIcon(new ImageIcon(campana));
        bthogar.setForeground(Color.black);
        btexplorar.setForeground(Color.black);
        btnotificacion.setForeground(Color.black);
-       btmsj.setForeground(Color.black);
        btliza.setForeground(Color.black);
-       btcomunidad.setForeground(Color.black);  
        btuser.setForeground(Color.black);  
        btmas.setForeground(Color.black);  
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btcomunidad;
     private javax.swing.JButton btexplorar;
     private javax.swing.JButton bthogar;
     private javax.swing.JButton btliza;
     private javax.swing.JButton btmas;
-    private javax.swing.JButton btmsj;
     private javax.swing.JButton btnotificacion;
     private javax.swing.JButton bttweet;
     private javax.swing.JButton btuser;
