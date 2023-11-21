@@ -2,9 +2,6 @@
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
-
-
-
 public class MenuTwitter extends javax.swing.JFrame {
  
     String image1,image2,lupan,lupaA,campana,campanaA,sobre,sobreA,gente,genteA,user,userA,mas,masA,lista,listaA;
