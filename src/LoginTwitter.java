@@ -144,7 +144,7 @@ public class LoginTwitter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btregistrarActionPerformed
-      CrearCuenta cuenta=new CrearCuenta();
+      CrearCuenta cuenta=new CrearCuenta(this);
       crearimage();
       cuenta.addWindowListener(new WindowAdapter() {
         @Override

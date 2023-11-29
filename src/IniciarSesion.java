@@ -7,7 +7,7 @@ import javax.swing.border.Border;
 
 
 public class IniciarSesion extends javax.swing.JFrame {
-    CrearCuenta cuenta=new CrearCuenta();
+    
      Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
     Color colorPersonalizado = new Color(0, 153, 255);
     Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
@@ -215,7 +215,7 @@ public class IniciarSesion extends javax.swing.JFrame {
     }
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        
+        CrearCuenta cuenta=new CrearCuenta(login);
         cuenta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked

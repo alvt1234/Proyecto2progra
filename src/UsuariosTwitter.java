@@ -1,4 +1,9 @@
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Date;
+
+
 public class UsuariosTwitter {
     
   private String nombre;
@@ -7,14 +12,16 @@ public class UsuariosTwitter {
   private String contra;
   private int edad;
   private boolean activa;
-
-    public UsuariosTwitter(String nombre, char genero, String username, String contra, int edad, boolean activa) {
+  private Date fecha;
+  
+    public UsuariosTwitter(String nombre, char genero, String username, String contra, int edad, boolean activa,Date fecha) {
         this.nombre = nombre;
         this.genero = genero;
         this.username = username;
         this.contra = contra;
         this.edad = edad;
         this.activa = activa;
+        this.fecha=new Date();
     }
 
     public String getNombre() {
@@ -65,5 +72,15 @@ public class UsuariosTwitter {
         this.activa = activa;
     }
   
+    public void guardaruser(RandomAccessFile file) throws IOException{
+        file.seek(file.length());
+        file.writeUTF(nombre);
+        file.writeUTF(contra);
+        file.writeUTF(username);
+        file.writeChar(genero);
+        file.writeInt(edad);
+        file.writeBoolean(activa);
+        file.writeLong(fecha.getTime());
+    }
   
 }

@@ -19,10 +19,11 @@ public class CrearCuenta extends javax.swing.JFrame {
     Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
     Color colorPersonalizado = new Color(0, 153, 255);
     Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
-    public CrearCuenta() {
+    private LoginTwitter login;
+    public CrearCuenta(LoginTwitter login) {
         initComponents();
         this.setLocationRelativeTo(null);
-         
+        this.login=login;
          
     }
 
@@ -273,7 +274,7 @@ public class CrearCuenta extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String fechaEntrada = dateFormat.format(fechaActual);
         System.out.println("user"+user+" contra "+contra);
-        UsuariosTwitter users=new UsuariosTwitter(name, generoselected, user, contra,edad, true);
+        UsuariosTwitter users=new UsuariosTwitter(name, generoselected, user, contra,edad, true,fechaActual);
         File folderuser = new File(user);
         if(!folderuser.exists()){
             folderuser.mkdirs();
@@ -286,7 +287,7 @@ public class CrearCuenta extends javax.swing.JFrame {
             }catch(IOException e){
        
             }
-        Foto foto=new Foto();
+        Foto foto=new Foto(login);
         foto.setVisible(true);
         dispose(); 
         }else{
