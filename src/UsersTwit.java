@@ -78,10 +78,11 @@ public class UsersTwit {
                 return true;
             }
          }
+            if(!user.equals(usuario)){
+               JOptionPane.showMessageDialog(null, "Usuario Inexistente"); 
+            }
             if(!contra.equals(password)){
                 JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-            }if(!user.equals(usuario)){
-               JOptionPane.showMessageDialog(null, "Usuario Inexistente"); 
             }
          return false;
      }
