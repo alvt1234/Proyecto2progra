@@ -1,9 +1,7 @@
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import javax.swing.JOptionPane;
 
 
 public class UsersTwit {
@@ -20,11 +18,11 @@ public class UsersTwit {
  public boolean Existeuser(String user) throws IOException {
 
         while (registro.getFilePointer() < registro.length()) {
-            String nombre = registro.readUTF();
-            char genero = registro.readChar();
+            registro.readUTF();
+            registro.readChar();
             String usuario = registro.readUTF();
-            registro.readUTF(); // Puedes saltar el campo si es necesario
-            int edad = registro.readInt();
+            registro.readUTF(); 
+            registro.readInt();
             System.out.println("aqui");
 
             if (user.trim().equals(usuario.trim())) {
