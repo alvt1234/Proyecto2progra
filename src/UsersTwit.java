@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import javax.swing.JOptionPane;
 
 
 public class UsersTwit {
@@ -42,13 +43,13 @@ public class UsersTwit {
     private void carpetausers(String user) throws IOException{
        File file=new File(carpetauser(user));
         file.mkdirs();
-      /*  try{
+        try{
             new File("Usertwit/" + user + "/following.twc").createNewFile();
             new File("Usertwit/" + user + "/followers.twc").createNewFile();
             new File("Usertwit/" + user + "/twits.twc").createNewFile();
             }catch(IOException e){
             System.out.println("No se pudo crear");
-            } */
+            } 
     }
      public void agguser(String nombre, char genero, String user, String contra, int edad) throws IOException {
         if (!Existeuser(user)) {
@@ -63,16 +64,27 @@ public class UsersTwit {
             
         }
     }
-
-   private void cerrarArchivo() {
-    try {
-        if (registro != null) {
-            registro.close();
-        }
-    } catch (IOException e) {
-        System.out.println("Error al cerrar el archivo: " + e.getMessage());
-    }
-}
+     
+     public boolean iniciosesion(String user, String contra) throws IOException{
+      String usuario="";
+      String password="";
+         while(registro.getFilePointer() <registro.length()){
+            registro.readUTF();
+            registro.readChar();
+             usuario=registro.readUTF();
+             password=registro.readUTF();
+            registro.readInt();
+            if(user.equals(usuario) && contra.equals(password)){
+                return true;
+            }
+         }
+            if(!contra.equals(password)){
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+            }if(!user.equals(usuario)){
+               JOptionPane.showMessageDialog(null, "Usuario Inexistente"); 
+            }
+         return false;
+     }
 
 
 }

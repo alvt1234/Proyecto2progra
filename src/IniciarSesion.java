@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
@@ -187,29 +188,40 @@ public class IniciarSesion extends javax.swing.JFrame {
         if(txtuser.getText().isEmpty() || txtcontra.getText().isEmpty() ){
         
         if(txtuser.getText().isEmpty()){
-            txtuser.setBorder(bordeRojo);
-            lbuser.setForeground(Color.red);
+           borderojo();
         }if(txtcontra.getText().isEmpty()){
-            txtcontra.setBorder(bordeRojo);
-            lbcontra.setForeground(Color.red);
+            borderojo();
         }
         JOptionPane.showMessageDialog(null, "llene todos los campos");
-           txtuser.setBorder(bordePersonalizado);
-           lbuser.setForeground(new Color(0, 153, 255));  
-           txtcontra.setBorder(bordePersonalizado);
-           lbcontra.setForeground(new Color(0, 153, 255)); 
+           bordeazul();
         }else{
-           if(buscarUsuario(user)){ 
+            UsersTwit usertwit=new UsersTwit();
+          try{  
+       if(usertwit.iniciosesion(user, contra)){ 
        MenuTwitter menu=new MenuTwitter();
        menu.setVisible(true);
        dispose();
        login.dispose();
-           }else
-               JOptionPane.showMessageDialog(null, "Usuario Inexistente");
+        }
+          }catch(IOException e){
+              
+          }
         }
        
     }//GEN-LAST:event_btsiguiente1ActionPerformed
 
+    private void borderojo(){
+        txtuser.setBorder(bordeRojo);
+        lbuser.setForeground(Color.red);
+        txtcontra.setBorder(bordeRojo);
+        lbcontra.setForeground(Color.red);
+    }
+    private void bordeazul(){
+           txtuser.setBorder(bordePersonalizado);
+           lbuser.setForeground(new Color(0, 153, 255));  
+           txtcontra.setBorder(bordePersonalizado);
+           lbcontra.setForeground(new Color(0, 153, 255)); 
+    }
     public static boolean buscarUsuario(String username) {
         File buscaruser = new File("Usertwit/" +username);
         return buscaruser.exists() && buscaruser.isDirectory();
