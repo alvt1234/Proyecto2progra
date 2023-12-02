@@ -17,25 +17,23 @@ public class UsersTwit {
         System.out.println("Erros");
     }
     }
-   public boolean Existeuser(String user) throws IOException {
-    registro.seek(0);
-    while (registro.getFilePointer() < registro.length()) {
-        try {
-            registro.readUTF(); // Reading the first string
-            registro.readChar();
-            String usuario = registro.readUTF(); // Reading the second string
-            registro.readUTF();
+ public boolean Existeuser(String user) throws IOException {
+
+        while (registro.getFilePointer() < registro.length()) {
+            String nombre = registro.readUTF();
+            char genero = registro.readChar();
+            String usuario = registro.readUTF();
+            registro.readUTF(); // Puedes saltar el campo si es necesario
+            int edad = registro.readInt();
             System.out.println("aqui");
-            System.out.println("user: "+user+"usuario"+usuario);
-            if (user.equals(usuario)) {
+
+            if (user.trim().equals(usuario.trim())) {
                 System.out.println("aquino");
-                JOptionPane.showMessageDialog(null, "USUARIO YA EXISTENTE");
                 return true;
             }
-        } catch (EOFException e) {
-            break; 
         }
-    }
+    
+
     return false;
 }
 
@@ -68,14 +66,15 @@ public class UsersTwit {
         }
     }
 
-    private void cerrarArchivo() {
-        try {
-            if (registro != null) {
-                registro.close();
-            }
-        } catch (IOException e) {
-            System.out.println("Error al cerrar el archivo: " + e.getMessage());
+   private void cerrarArchivo() {
+    try {
+        if (registro != null) {
+            registro.close();
         }
+    } catch (IOException e) {
+        System.out.println("Error al cerrar el archivo: " + e.getMessage());
     }
+}
+
 
 }
