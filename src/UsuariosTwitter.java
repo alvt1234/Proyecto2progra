@@ -1,6 +1,10 @@
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 
@@ -13,7 +17,7 @@ public class UsuariosTwitter {
   private int edad;
   private boolean activa;
   private Date fecha;
-  
+  private File file;
     public UsuariosTwitter(String nombre, char genero, String username, String contra, int edad, boolean activa,Date fecha) {
         this.nombre = nombre;
         this.genero = genero;
@@ -72,7 +76,7 @@ public class UsuariosTwitter {
         this.activa = activa;
     }
   
-    public void guardaruser(RandomAccessFile file) throws IOException{
+   /* public void guardaruser(RandomAccessFile file) throws IOException{
         file.seek(file.length());
         file.writeUTF(nombre);
         file.writeUTF(contra);
@@ -81,6 +85,9 @@ public class UsuariosTwitter {
         file.writeInt(edad);
         file.writeBoolean(activa);
         file.writeLong(fecha.getTime());
-    }
+    }*/
+    
+   
+
   
 }

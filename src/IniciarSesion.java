@@ -8,11 +8,12 @@ import javax.swing.border.Border;
 
 public class IniciarSesion extends javax.swing.JFrame {
     
-     Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
+    Border bordeRojo = BorderFactory.createLineBorder(Color.RED);
     Color colorPersonalizado = new Color(0, 153, 255);
     Border bordePersonalizado = BorderFactory.createLineBorder(colorPersonalizado);
     private String user,contra;
     private LoginTwitter login;
+    //constructor
     public IniciarSesion(LoginTwitter login) {
         initComponents();
         this.login=login;
@@ -210,9 +211,10 @@ public class IniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btsiguiente1ActionPerformed
 
     public static boolean buscarUsuario(String username) {
-        File buscaruser = new File(username);
+        File buscaruser = new File("Usertwit/" +username);
         return buscaruser.exists() && buscaruser.isDirectory();
     }
+    
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         CrearCuenta cuenta=new CrearCuenta(login);

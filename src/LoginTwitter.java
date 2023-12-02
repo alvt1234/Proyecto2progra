@@ -144,33 +144,38 @@ public class LoginTwitter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btregistrarActionPerformed
-      CrearCuenta cuenta=new CrearCuenta(this);
-      crearimage();
-      cuenta.addWindowListener(new WindowAdapter() {
+        CrearCuenta cuenta=new CrearCuenta(this);
+        crearimage();
+        cuenta.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosed(WindowEvent e) {
-            aggimagen(labelfondo, "src/imagentwitter/twitter.png");
+            image();
         }
     });
         cuenta.setVisible(true);
+       
     }//GEN-LAST:event_btregistrarActionPerformed
 
     private void btiniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btiniciarsesionActionPerformed
-       IniciarSesion sesion=new IniciarSesion(this);
-       crearimage();
-       sesion.addWindowListener(new WindowAdapter() {
+        IniciarSesion sesion=new IniciarSesion(this);
+        crearimage();
+        sesion.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosed(WindowEvent e) {
-            aggimagen(labelfondo, "src/imagentwitter/twitter.png");
+           image();
         }
     });
      sesion.setVisible(true);
+     
     }//GEN-LAST:event_btiniciarsesionActionPerformed
 
-    private void crearimage(){
+    public void crearimage(){
       ImageIcon imagenTransparente = crearImagenSemitransparente("src/imagentwitter/twitter.png");
       Icon icono= new ImageIcon(imagenTransparente.getImage().getScaledInstance(labelfondo.getWidth(), labelfondo.getHeight(), Image.SCALE_DEFAULT));
       labelfondo.setIcon(icono);   
+    }
+    public void image(){
+         aggimagen(labelfondo, "src/imagentwitter/twitter.png");
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      System.exit(0);
