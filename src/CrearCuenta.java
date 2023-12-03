@@ -274,29 +274,7 @@ public class CrearCuenta extends javax.swing.JFrame {
            txtuser.setBorder(bordePersonalizado);
            lbuser.setForeground(new Color(0, 153, 255)); 
         }
-        
-      /*  File folderuser = new File("Usertwit/"+user);
-       if(!folderuser.exists()){
-            folderuser.mkdir();
-            System.out.println("entra");
-            System.out.println("Ruta del directorio: " + folderuser.getAbsolutePath());
-            try{
-            new File("Usertwit/" + user + "/following.twc").createNewFile();
-            new File("Usertwit/" + user + "/followers.twc").createNewFile();
-            new File("Usertwit/" + user + "/twits.twc").createNewFile();
-            }catch(IOException e){
-       
-            }
-        Foto foto=new Foto(login);
-        foto.setVisible(true);
-        this.setVisible(false);
-        }else{
-            txtuser.setBorder(bordeRojo);
-            lbuser.setForeground(Color.red);
-            JOptionPane.showMessageDialog(null, "Ya existe este usuario");
-           txtuser.setBorder(bordePersonalizado);
-           lbuser.setForeground(new Color(0, 153, 255)); 
-        }*/
+      
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Ingrese un numero en la edad");
             txtedad.setText("");

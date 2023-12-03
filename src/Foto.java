@@ -1,6 +1,7 @@
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,6 +11,7 @@ public class Foto extends javax.swing.JFrame {
     byte[] image;
     String imagepath = "";
     ImageIcon myimage;
+    UsersTwit usertwit=new UsersTwit();
     private LoginTwitter login;
     private LogicaTwitter logica = new LogicaTwitter();
 
@@ -118,6 +120,7 @@ public class Foto extends javax.swing.JFrame {
     }//GEN-LAST:event_btomitirActionPerformed
 
     private void btagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btagregarActionPerformed
+        try{
         JFileChooser file = new JFileChooser();
         file.setCurrentDirectory(new File("user.dir"));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("All Pic", "png", "jpg", "jpeg", "gif");
@@ -127,7 +130,12 @@ public class Foto extends javax.swing.JFrame {
             File f = file.getSelectedFile();
             String p = f.getAbsolutePath();
             lbimage.setIcon(seticon(p, null));
-            logica.guardarFotoDePerfil(f);
+            System.out.println("user en foto: "+usertwit.getUserlog());
+            usertwit.fotoperfil(usertwit.getUserlog(), f);
+            //logica.guardarFotoDePerfil(f);
+        }
+        }catch(IOException e){
+            System.out.println("Error al cargar la imagen");
         }
     }//GEN-LAST:event_btagregarActionPerformed
 

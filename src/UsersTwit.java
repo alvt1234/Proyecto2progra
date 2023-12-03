@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class UsersTwit {
     private RandomAccessFile registro;
+    private static String userlog;
     public UsersTwit(){
     try{
     File file=new File("Usertwit");
@@ -17,26 +18,20 @@ public class UsersTwit {
     }
     }
  public boolean Existeuser(String user) throws IOException {
-
+     
         while (registro.getFilePointer() < registro.length()) {
             registro.readUTF();
             registro.readChar();
             String usuario = registro.readUTF();
             registro.readUTF(); 
             registro.readInt();
-            System.out.println("aqui");
-
-            if (user.trim().equals(usuario.trim())) {
-                System.out.println("aquino");
+            if (user.equals(usuario)) {
                 return true;
             }
         }
-    
-
     return false;
 }
 
-    
     private String carpetauser(String user){
         return"Usertwit/"+user;
     }
@@ -61,31 +56,80 @@ public class UsersTwit {
                 registro.writeInt(edad);
                 carpetausers(user);
                 System.out.println("agg user");
-            
+                userlog=user;
         }
     }
      
      public boolean iniciosesion(String user, String contra) throws IOException{
-      String usuario="";
-      String password="";
-         while(registro.getFilePointer() <registro.length()){
+         while(registro.getFilePointer() < registro.length()){
             registro.readUTF();
             registro.readChar();
-             usuario=registro.readUTF();
-             password=registro.readUTF();
+            String usuario=registro.readUTF();
+             String password=registro.readUTF();
             registro.readInt();
-            if(user.equals(usuario) && contra.equals(password)){
+            if(user.equals(usuario.trim()) && contra.equals(password.trim())){
+                userlog=user;
                 return true;
             }
+                 
          }
-            if(!user.equals(usuario)){
-               JOptionPane.showMessageDialog(null, "Usuario Inexistente"); 
-            }
-            if(!contra.equals(password)){
-                JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-            }
+           
          return false;
      }
+  
+    public void fotoperfil(String user, File fotoperfil) throws IOException {
+    // Obtener la ruta de la foto
+    String rutafoto = fotoperfil.getAbsolutePath();
 
+    // Crear un archivo separado para las fotos de perfil
+    String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";
+    try (RandomAccessFile archivoFotoPerfil = new RandomAccessFile(rutaArchivoFoto, "rw")) {
+        archivoFotoPerfil.writeUTF(rutafoto);
+    }
+}
 
+    public String getUserlog() {
+        return userlog;
+    }
+//   private long buscarUsuario(String user) throws IOException {
+//   // registro.seek(0);
+//    while (registro.getFilePointer() < registro.length()) {
+//        long posActual = registro.getFilePointer();
+//        registro.readUTF();
+//        registro.readChar();
+//        String usuario = registro.readUTF();
+//        registro.readUTF();
+//        registro.readInt();
+//        if (usuario.equals(user)) {
+//            return posActual;
+//        }
+//    }
+//    return -1; // Usuario no encontrado
+//}
+//
+//    
+//
+//public ImageIcon obtenerFotoPerfil(String user) throws IOException {
+//    long posUsuario = buscarUsuario(user);
+//
+//    if (posUsuario != -1) {
+//        registro.seek(posUsuario);
+//        registro.readUTF();
+//        registro.readChar();
+//        registro.readUTF();
+//        registro.readUTF();
+//        registro.readInt();
+//
+//        // Leer la ruta de la foto del usuario
+//        String rutaFoto = registro.readUTF();
+//
+//        // Crear un ImageIcon a partir de la ruta de la foto
+//        ImageIcon fotoIcon = new ImageIcon(rutaFoto);
+//
+//        return fotoIcon;
+//    } else {
+//        System.out.println("El usuario no existe");
+//        return null;
+//    }
+//}
 }

@@ -204,7 +204,7 @@ public class IniciarSesion extends javax.swing.JFrame {
        login.dispose();
         }
           }catch(IOException e){
-              
+              JOptionPane.showMessageDialog(null, "Usuario Inexistente");
           }
         }
        
