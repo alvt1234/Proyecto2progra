@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import javax.swing.JOptionPane;
 
-
 public class UsersTwit {
     private RandomAccessFile registro;
     private static String userlog;
@@ -65,7 +64,7 @@ public class UsersTwit {
             registro.readUTF();
             registro.readChar();
             String usuario=registro.readUTF();
-             String password=registro.readUTF();
+            String password=registro.readUTF();
             registro.readInt();
             if(user.equals(usuario.trim()) && contra.equals(password.trim())){
                 userlog=user;

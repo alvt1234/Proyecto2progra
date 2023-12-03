@@ -1,12 +1,9 @@
 
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,10 +44,34 @@ public class LogicaTwitter {
    
      public void guardarTwit(String txt) throws IOException {
         tweets.seek(tweets.length());
+        String fechaString = "03-12-2023 10:45:37";
 
-        tweets.writeUTF(user.getUserlog());
-        tweets.writeUTF(txt);
-        tweets.writeLong(Calendar.getInstance().getTimeInMillis());
+        // Define el formato de fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        try {
+            // Convierte la cadena a un objeto Date
+            Date fechaDate = dateFormat.parse(fechaString);
+
+            // Obtiene el valor long de la fecha
+            long valorLong = fechaDate.getTime();
+
+            // Imprime el valor long
+            System.out.println("Valor long de la fecha: " + valorLong);
+            tweets.writeUTF(user.getUserlog());
+            tweets.writeUTF(txt);
+            tweets.writeLong(valorLong);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       /* Date fechaActual = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String fechaEntrada = dateFormat.format(fechaActual);
+         System.out.println("fecha entrada: "+fechaEntrada);*/
+            
+            //tweets.writeUTF(fechaEntrada);
+       
+        
 
     }
    /* public void almacenartweets(String texto) throws IOException{

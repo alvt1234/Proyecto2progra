@@ -1,9 +1,11 @@
 
+import java.awt.FlowLayout;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.BoxLayout;
 import javax.swing.JScrollBar;
 
 
@@ -88,9 +90,20 @@ public class Timeline extends javax.swing.JPanel {
         scrolltweets.setBackground(new java.awt.Color(255, 255, 255));
         scrolltweets.setBorder(null);
         scrolltweets.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrolltweets.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         paneltweets.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout paneltweetsLayout = new javax.swing.GroupLayout(paneltweets);
+        paneltweets.setLayout(paneltweetsLayout);
+        paneltweetsLayout.setHorizontalGroup(
+            paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 665, Short.MAX_VALUE)
+        );
+        paneltweetsLayout.setVerticalGroup(
+            paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 615, Short.MAX_VALUE)
+        );
+
         scrolltweets.setViewportView(paneltweets);
 
         jSeparator3.setBackground(new java.awt.Color(204, 204, 204));
@@ -188,27 +201,32 @@ public class Timeline extends javax.swing.JPanel {
     }*/
 private void subirtweets() throws IOException {
     paneltweets.removeAll();
-    twits = logica.cargarTwits();
+        paneltweets.setLayout(new BoxLayout(paneltweets, BoxLayout.Y_AXIS));  // Usar BoxLayout para apilar verticalmente
 
-    if (!twits.isEmpty()) {
-        for (String[] tweet : twits) {
-            String usuario = tweet[0];  // Obtener el usuario del tweet
-            String texto = tweet[1];    // Obtener el texto del tweet
-            String fecha = tweet[2];    // Obtener la fecha del tweet
+        twits = logica.cargarTwits();
 
-            // Crear una instancia de la clase Tweets con los datos correctos
-            Tweets twee = new Tweets(usuario, texto, fecha);
-            paneltweets.add(twee);
-        }
+        if (!twits.isEmpty()) {
+            for (String[] tweet : twits) {
+                String usuario = tweet[0];  
+                String texto = tweet[1];    
+                String fecha = tweet[2];    
 
-        paneltweets.revalidate();
-        paneltweets.repaint();
-        scrolltweets.revalidate();
-        scrolltweets.repaint();
-        
-        // Mover la barra de desplazamiento al final
-        JScrollBar barra = scrolltweets.getVerticalScrollBar();
-        barra.setValue(barra.getMaximum());
+                long tiempoEnMilisegundos = Long.parseLong(fecha);
+                Date fechadate = new Date(tiempoEnMilisegundos);
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String fechaFormateada = formatoFecha.format(fechadate);
+                Tweets twee = new Tweets(usuario, texto, fechaFormateada);
+                paneltweets.add(twee);
+            }
+
+            paneltweets.revalidate();
+            paneltweets.repaint();
+            scrolltweets.revalidate();
+            scrolltweets.repaint();
+
+            // Mover la barra de desplazamiento al final
+            JScrollBar barra = scrolltweets.getVerticalScrollBar();
+            barra.setValue(barra.getMaximum());
         scrolltweets.repaint();
         this.repaint();
     }
