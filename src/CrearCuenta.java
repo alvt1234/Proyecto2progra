@@ -263,7 +263,7 @@ public class CrearCuenta extends javax.swing.JFrame {
             
             if(!usertwit.Existeuser(user)){
                 System.out.println("entra");
-                usertwit.agguser(name, generoselected, user, contra, edad);
+                usertwit.agguser(name, generoselected, user, contra, edad,fechaEntrada,true);
                  Foto foto=new Foto(login);
                  foto.setVisible(true);
                  this.setVisible(false);

@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MenuTwitter extends javax.swing.JFrame {
@@ -98,7 +99,7 @@ public class MenuTwitter extends javax.swing.JFrame {
 
         btmas.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/mas.png"))); // NOI18N
-        btmas.setText(" MAS");
+        btmas.setText("  CERRAR SESION");
         btmas.setBorderPainted(false);
         btmas.setContentAreaFilled(false);
         btmas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -147,7 +148,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +165,9 @@ public class MenuTwitter extends javax.swing.JFrame {
                 .addComponent(btuser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btmas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(63, 63, 63)
                 .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(102, 102, 102))
         );
@@ -251,6 +252,15 @@ public class MenuTwitter extends javax.swing.JFrame {
         botonesblack();
         btmas.setForeground(new Color(0, 153, 255));
         btmas.setIcon(new ImageIcon(masA));
+        int opcion=JOptionPane.showInternalConfirmDialog(null, "Desea cerrar la sesion? ");
+         if (opcion == JOptionPane.YES_OPTION) {
+         LoginTwitter login=new LoginTwitter();
+        login.setVisible(true);
+        dispose();
+        } else if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CANCEL_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
+             System.out.println("no cerro xd");
+        } 
+        
     }//GEN-LAST:event_btmasActionPerformed
 
     private void bttweetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttweetActionPerformed

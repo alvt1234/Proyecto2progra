@@ -2,7 +2,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import javax.swing.JOptionPane;
 
 public class UsersTwit {
     private RandomAccessFile registro;
@@ -24,6 +23,8 @@ public class UsersTwit {
             String usuario = registro.readUTF();
             registro.readUTF(); 
             registro.readInt();
+            registro.readUTF();
+            registro.readBoolean();
             if (user.equals(usuario)) {
                 return true;
             }
@@ -45,7 +46,7 @@ public class UsersTwit {
             System.out.println("No se pudo crear");
             } 
     }
-     public void agguser(String nombre, char genero, String user, String contra, int edad) throws IOException {
+     public void agguser(String nombre, char genero, String user, String contra, int edad,String fecha,boolean activa) throws IOException {
         if (!Existeuser(user)) {
                 registro.seek(registro.length());
                 registro.writeUTF(nombre);
@@ -53,6 +54,8 @@ public class UsersTwit {
                 registro.writeUTF(user);
                 registro.writeUTF(contra);
                 registro.writeInt(edad);
+                registro.writeUTF(fecha);
+                registro.writeBoolean(activa);
                 carpetausers(user);
                 System.out.println("agg user");
                 userlog=user;
@@ -66,6 +69,8 @@ public class UsersTwit {
             String usuario=registro.readUTF();
             String password=registro.readUTF();
             registro.readInt();
+            registro.readUTF();
+            registro.readBoolean();
             if(user.equals(usuario.trim()) && contra.equals(password.trim())){
                 userlog=user;
                 return true;
