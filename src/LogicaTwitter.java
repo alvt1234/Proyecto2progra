@@ -2,11 +2,9 @@
 import java.awt.Image;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class LogicaTwitter {
@@ -44,11 +42,11 @@ public class LogicaTwitter {
    
      public void guardarTwit(String txt) throws IOException {
         tweets.seek(tweets.length());
-        String fechaString = "03-12-2023 10:45:37";
+        Date fechaActual = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-        // Define el formato de fecha
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
+    // Formatear la fecha como una cadena
+    String fechaString = dateFormat.format(fechaActual);
         try {
             // Convierte la cadena a un objeto Date
             Date fechaDate = dateFormat.parse(fechaString);
@@ -64,33 +62,9 @@ public class LogicaTwitter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-       /* Date fechaActual = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String fechaEntrada = dateFormat.format(fechaActual);
-         System.out.println("fecha entrada: "+fechaEntrada);*/
-            
-            //tweets.writeUTF(fechaEntrada);
-       
-        
 
     }
-   /* public void almacenartweets(String texto) throws IOException{
-        String usuario=user.getUserlog();
-        
-        try (RandomAccessFile archivoTwits = new RandomAccessFile("Usertwit/" + usuario + "/twits.twc", "rw")) {
-            Date fechaActual = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String fechaEntrada = dateFormat.format(fechaActual);
-          //  SimpleDateFormat formatoFecha = new SimpleDateFormat("");
-           //  String fecha=String.valueOf(dateFormat);
-          //   Tweets twee=new Tweets(usuario, texto, fecha);
-            // String tweet=usuario+": "+texto+" - "+fecha;
-             archivoTwits.writeUTF(texto);
-             archivoTwits.writeLong(Calendar.getInstance().getTimeInMillis());
-        }catch(IOException e){
-            System.out.println("No se pudo subir el tweet");
-        }
-    }*/
+   
     public ArrayList<String[]> misTwits() throws IOException {
         ArrayList<String[]> mensajes = new ArrayList<>();
         tweets.seek(0);
@@ -114,14 +88,14 @@ public class LogicaTwitter {
         }
         // Ordena los twits del más antiguo al más reciente por la marca de tiempo
         for (int i = 0; i < twits.size(); i++) {
-            for (int j = 0; j < twits.size() - i - 1; j++) {
-                if (Long.parseLong(twits.get(i)[2]) > Long.parseLong(twits.get(i + 1)[2])) {
-                    String[] temp = twits.get(i + 1);
-                    twits.set(i + 1, twits.get(i));
-                    twits.set(i, temp);
-                }
+        for (int j = 0; j < twits.size() - i - 1; j++) {
+            if (Long.parseLong(twits.get(j)[2]) > Long.parseLong(twits.get(j + 1)[2])) {
+                String[] temp = twits.get(j + 1);
+                twits.set(j + 1, twits.get(j));
+                twits.set(j, temp);
             }
         }
+    }
         return twits;
     }
 }
