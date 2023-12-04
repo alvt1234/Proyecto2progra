@@ -24,6 +24,7 @@ public class Buscarusuarios {
         }
     }
  
+    //Buscar los usuarios que contienen letra
  public ArrayList<String> buscarUsuarios(String textoBusqueda) throws IOException {
     ArrayList<String> resultados = new ArrayList<>();
 
@@ -45,25 +46,27 @@ public class Buscarusuarios {
 
     return resultados;
 }
+ //funcion para contar los seguidores (NO FUNCIONA)
     private void initCode() throws IOException {
         if (siguiendo.length() == 0) {
             //               0 bytes
-            siguiendo.writeInt(1);
+            siguiendo.writeInt(0);
             //               4 bytes
         }
     }
+    
+    //Guardar a las personas que sigo
     public void guardarsiguiendo(String user,String texto)throws IOException{
         //siguiendo   
-           siguiendo.seek(0);
+           siguiendo.seek(siguiendo.length());
            int cantsiguiendo= siguiendo.readInt();
-           siguiendo.seek(0);
            siguiendo.writeInt(cantsiguiendo+1); 
            siguiendo.writeUTF(user);
            siguiendo.writeUTF(texto);
        //seguidores otra persona 
-           seguidores=new RandomAccessFile("Usertwit/" + user + "/followers.twc", "rw");
+           seguidores=new RandomAccessFile("Usertwit/" + user + "/followers.twc", "rwd");
            if(seguidores.length() ==0){
-               seguidores.writeInt(1);
+               seguidores.writeInt(0);
            }
            seguidores.seek(0);
            int cantseguidor= seguidores.readInt();
@@ -71,12 +74,14 @@ public class Buscarusuarios {
            seguidores.writeInt(cantseguidor+1); 
            seguidores.writeUTF(users.getUserlog());
     }
- 
+    //obtener el numero de seguidos(NO FUNCIONA)
     public int getsiguiendo() throws IOException{
     siguiendo.seek(0);
     int cantsiguiendo= siguiendo.readInt();
     return cantsiguiendo;
     }
+    
+    //Para que se guarde el texto del boton (aveces funciona)
    public boolean textoboton(String nombre) throws IOException {
     siguiendo.seek(0);
 
@@ -100,6 +105,7 @@ public class Buscarusuarios {
     return false;
 }
 
+   //para disminuir los seguidores
     public void dejardeseguir(String user,String texto)throws IOException{
        siguiendo.seek(0);
        int cantsiguiente=siguiendo.readInt();
@@ -108,7 +114,7 @@ public class Buscarusuarios {
        siguiendo.readUTF();
        siguiendo.writeUTF(texto);
        
-       seguidores=new RandomAccessFile("Usertwit/" + user + "/followers.twc", "rw");
+       seguidores=new RandomAccessFile("Usertwit/" + user + "/followers.twc", "rwd");
        seguidores.seek(0);
        int cantseguidores=seguidores.readInt();
        seguidores.writeInt(cantseguidores-1);

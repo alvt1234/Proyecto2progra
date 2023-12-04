@@ -13,7 +13,7 @@ public class Foto extends javax.swing.JFrame {
     ImageIcon myimage;
     UsersTwit usertwit=new UsersTwit();
     private LoginTwitter login;
-    private LogicaTwitter logica = new LogicaTwitter();
+    //private LogicaTwitter logica = new LogicaTwitter();
 
     CrearCuenta cuenta=new CrearCuenta(login);
     public Foto(LoginTwitter login) {

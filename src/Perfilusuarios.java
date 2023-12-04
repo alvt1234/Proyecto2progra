@@ -1,6 +1,12 @@
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 
 
 /**
@@ -11,10 +17,12 @@ public class Perfilusuarios extends javax.swing.JPanel {
 
     private String name,use,fec,estado="Seguir";
     private char ge;
-    private int age,contar=0;;
+    private int age,contar=0;
+    private RandomAccessFile siguiendo,seguidores,tweets;
     UsersTwit users=new UsersTwit();
+     private ArrayList<String[]> twits;
     Buscarusuarios buscar=new Buscarusuarios(users);
-    
+    LogicaTwitter logica= new LogicaTwitter();
     public Perfilusuarios(String nombre,char genero,int edad,String userseleccionado,String fecha) {
         initComponents();
         this.name=nombre;
@@ -22,6 +30,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         this.age=edad;
         this.use=userseleccionado;
         this.fec=fecha;
+       
         lbuserlog.setText(users.getUserlog());
         lbname.setText(name);
         lbfecha.setText("Se unio el "+fec);
@@ -30,6 +39,10 @@ public class Perfilusuarios extends javax.swing.JPanel {
         lbedad.setText(age+" años");
         
         try{
+            tweets = new RandomAccessFile("Usertwit/" + use + "/twits.twc", "rw");
+            siguiendo=new RandomAccessFile("Usertwit/" + users.getUserlog() + "/following.twc", "rw");
+            seguidores=new RandomAccessFile("Usertwit/" + userseleccionado + "/followers.twc", "rw");
+            subirtweets(use);
         lbsiguiendo.setText(buscar.getsiguiendo()+" Siguiendo");
         if(buscar.textoboton(name)){
             contar++;
@@ -44,9 +57,37 @@ public class Perfilusuarios extends javax.swing.JPanel {
         
     }
     
-  
+    //leer el tweet de las personas
+  public ArrayList<String[]> Twitspersonas(String user) throws IOException {
+    ArrayList<String[]> mensajes = new ArrayList<>();
+    tweets.seek(0);
 
-    
+    while (tweets.getFilePointer() < tweets.length()) {
+        String[] temp = new String[3];
+        temp[0] = tweets.readUTF(); // usuario
+        temp[1] = tweets.readUTF(); // texto
+        temp[2] = tweets.readLong() + "";
+        
+        if (temp[0].equals(user)) {
+            mensajes.add(temp);
+        }
+    }
+
+    return mensajes.isEmpty() ? null : mensajes;
+}
+  
+//metodo para cargar los tweets
+public ArrayList<String[]> cargarTwits(String user) throws IOException {
+    ArrayList<String[]> twts = new ArrayList<>();
+
+    // Carga los propios twits
+    if (Twitspersonas(user) != null) {
+        twts.addAll(Twitspersonas(user));
+    }
+
+    return twts;
+}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,7 +221,42 @@ public class Perfilusuarios extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btseguirActionPerformed
 
+    private void subirtweets(String user) throws IOException{
+     paneltweets.removeAll();
+    paneltweets.setLayout(new BoxLayout(paneltweets, BoxLayout.Y_AXIS));
+    
+    twits = cargarTwits(user);
 
+    if (!twits.isEmpty()) {
+        // Iterar en orden inverso para agregar los nuevos tweets al principio
+        for (int i = twits.size() - 1; i >= 0; i--) {
+            String[] tweet = twits.get(i);
+            String usuario = tweet[0];
+            String texto = tweet[1];
+            String fecha = tweet[2];
+
+            long tiempoEnMilisegundos = Long.parseLong(fecha);
+            Date fechadate = new Date(tiempoEnMilisegundos);
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String fechaFormateada = formatoFecha.format(fechadate);
+            System.out.println("subir tweets: user:"+user+" usuario: "+usuario);
+            if(user.equals(usuario)){
+            Tweets twee = new Tweets(usuario, texto, fechaFormateada);
+            paneltweets.add(twee);
+            }
+            
+        }
+
+        paneltweets.revalidate();
+        paneltweets.repaint();
+        scrolltweets.revalidate();
+        scrolltweets.repaint();
+
+        // Mover la barra de desplazamiento al final
+        JScrollBar barra = scrolltweets.getVerticalScrollBar();
+        barra.setValue(barra.getMaximum());
+    }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btseguir;
     private javax.swing.JPanel jPanel1;

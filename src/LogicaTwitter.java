@@ -43,7 +43,7 @@ public class LogicaTwitter {
      public void guardarTwit(String txt) throws IOException {
         tweets.seek(tweets.length());
         Date fechaActual = new Date();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     // Formatear la fecha como una cadena
     String fechaString = dateFormat.format(fechaActual);
@@ -86,16 +86,7 @@ public class LogicaTwitter {
         if (misTwits() != null) {
             twits.addAll(misTwits());
         }
-        // Ordena los twits del más antiguo al más reciente por la marca de tiempo
-        for (int i = 0; i < twits.size(); i++) {
-        for (int j = 0; j < twits.size() - i - 1; j++) {
-            if (Long.parseLong(twits.get(j)[2]) > Long.parseLong(twits.get(j + 1)[2])) {
-                String[] temp = twits.get(j + 1);
-                twits.set(j + 1, twits.get(j));
-                twits.set(j, temp);
-            }
-        }
-    }
+       
         return twits;
     }
      

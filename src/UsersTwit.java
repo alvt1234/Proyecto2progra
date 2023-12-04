@@ -91,10 +91,34 @@ public class UsersTwit {
         archivoFotoPerfil.writeUTF(rutafoto);
     }
 }
+    public String enviarfoto(String user) throws IOException{
+      String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";  
+      RandomAccessFile archivoFotoPerfil = new RandomAccessFile(rutaArchivoFoto, "rw");
+       String foto= archivoFotoPerfil.readUTF();
+       return foto;
+    }
 
     public String getUserlog() {
         return userlog;
     }
+    public boolean desaccuenta()throws IOException{
+       while(registro.getFilePointer() < registro.length()){
+            registro.readUTF();
+            registro.readChar();
+            String usuario=registro.readUTF();
+            registro.readUTF();
+            registro.readInt();
+            registro.readUTF();
+            registro.readBoolean();
+            if(usuario.equals(userlog)){
+                registro.writeBoolean(false);
+                return true;
+            }
+                 
+         } 
+       return false;
+    }
+   
  /* public long buscarUsuario(String user) throws IOException {
 //  // registro.seek(0);
     while (registro.getFilePointer() < registro.length()) {

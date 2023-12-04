@@ -1,7 +1,4 @@
 
-import java.io.IOException;
-import javax.swing.ImageIcon;
-
 
 /**
  *
@@ -20,7 +17,7 @@ public class Tweets extends javax.swing.JPanel {
        // ImageIcon fotoIcon = users.obtenerFotoPerfil(user);
       //  perfil.setIcon(fotoIcon);
         panelfondo.add(perfil);
-        lbnombre.setText(users.getUserlog());
+        lbnombre.setText(user);
         areafondo.setText(text);
         lbfecha.setText(fecha);
         

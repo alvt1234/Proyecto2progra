@@ -38,17 +38,6 @@ public class Timeline extends javax.swing.JPanel {
      
    
     }
-
-private String obtenerTextoSeleccionado() {
-    // Obtener el texto seleccionado de la ventana de sugerencias
-    int indiceSeleccionado = listaSugerencias.getSelectedIndex();
-    if (indiceSeleccionado != -1) {
-        return listaSugerencias.getModel().getElementAt(indiceSeleccionado);
-    }
-    return null;
-}
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -240,9 +229,7 @@ private void ocultarVentanaSugerencias() {
 }
 
 private ArrayList<String> obtenerSugerencias(String mencion) throws IOException {
-        // Lógica para obtener sugerencias de usuarios basadas en la mención
-        // Por ejemplo, podrías buscar usuarios que comiencen con la cadena mencionada
-
+      
         ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
 
         ArrayList<String> sugerencias = new ArrayList<>();
@@ -261,28 +248,6 @@ private ArrayList<String> obtenerSugerencias(String mencion) throws IOException 
     }
 
 
-
-     
-    
-    /*private String buscarusers() throws IOException{
-       String mencion=txtmencion.getText();
-       ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
-
-    StringBuilder resultBuilder = new StringBuilder();
-
-    if (!resultados.isEmpty()) {
-        for (String usuario : resultados) {
-            // Verificar si el usuario contiene la letra escrita
-            if (!usuario.equalsIgnoreCase(user.getUserlog())&& usuario.toLowerCase().contains(mencion.toLowerCase())) {
-                resultBuilder.append(usuario).append("\n");
-            }
-        }
-    }else
-        return  "No se encontraron usuarios";
-
-    return resultBuilder.toString();
-    }*/
-    
     //subir tweets
 private void subirtweets() throws IOException {
     paneltweets.removeAll();

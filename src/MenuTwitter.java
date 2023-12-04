@@ -35,6 +35,7 @@ public class MenuTwitter extends javax.swing.JFrame {
             try{
             if (!e.getValueIsAdjusting()) {
                 // Obtener el nombre seleccionado
+                
                 String nombreSeleccionado = listabuscar.getSelectedValue();
                 if(nombreSeleccionado!=null){
                 buscarparaelperfil(nombreSeleccionado);
@@ -234,8 +235,25 @@ public class MenuTwitter extends javax.swing.JFrame {
         botonesblack();
         btuser.setForeground(new Color(0, 153, 255));
         btuser.setIcon(new ImageIcon(userA));
-        Perfil perfil=new Perfil();
-        crearpaneles(perfil);
+        try(RandomAccessFile registro=new RandomAccessFile("Usertwit/user.twc","rw");){
+         while(registro.getFilePointer() < registro.length()){
+            String name=registro.readUTF();
+            char genero=registro.readChar();
+            String usuario=registro.readUTF();
+            registro.readUTF();
+            int edad=registro.readInt();
+            String fecha=registro.readUTF();
+            registro.readBoolean();
+            
+            if(usuario.equals(users.getUserlog())){
+             Perfil perfil=new Perfil(name,genero,edad, fecha);
+             crearpaneles(perfil);
+            }
+         }
+        }catch(IOException e){
+            
+        }
+       
     }//GEN-LAST:event_btuserActionPerformed
 
     private void btmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmasActionPerformed
