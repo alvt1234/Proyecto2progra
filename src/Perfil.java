@@ -175,7 +175,7 @@ private void subirtweets() throws IOException {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbseguidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbseguidoresMouseClicked
-        try{
+       /* try{
         int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta segura de desactivar su cuenta? ");
          if (opcion == JOptionPane.YES_OPTION) {
          JOptionPane.showMessageDialog(null, "Su cuenta ha sido desactivada");
@@ -188,7 +188,7 @@ private void subirtweets() throws IOException {
         
         }catch(IOException e){
             
-        }
+        }*/
     }//GEN-LAST:event_lbseguidoresMouseClicked
 
 
