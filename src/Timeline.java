@@ -1,10 +1,15 @@
 
+import java.awt.Point;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BoxLayout;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 
 /**
@@ -13,11 +18,16 @@ import javax.swing.JScrollBar;
  */
 public class Timeline extends javax.swing.JPanel {
 
+    private JList<String> listaSugerencias = new JList<>();
     UsersTwit user=new UsersTwit();
     LogicaTwitter logica;
+    Buscarusuarios buscar=new Buscarusuarios(user);
     private ArrayList<String[]> twits;
+    private JPopupMenu popupSugerencias;
     public Timeline(LogicaTwitter logica) {
         initComponents();
+        popupSugerencias=new JPopupMenu();
+        popupSugerencias.add(new JScrollPane(listaSugerencias));
        try{
        this.logica=logica;
        this.twits=logica.cargarTwits();
@@ -25,7 +35,19 @@ public class Timeline extends javax.swing.JPanel {
        }catch(IOException e){
             System.out.println("error en cargar ");
         }
+     
+   
     }
+
+private String obtenerTextoSeleccionado() {
+    // Obtener el texto seleccionado de la ventana de sugerencias
+    int indiceSeleccionado = listaSugerencias.getSelectedIndex();
+    if (indiceSeleccionado != -1) {
+        return listaSugerencias.getModel().getElementAt(indiceSeleccionado);
+    }
+    return null;
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,12 +86,17 @@ public class Timeline extends javax.swing.JPanel {
         txttexto.setForeground(new java.awt.Color(102, 102, 102));
         txttexto.setToolTipText("");
         txttexto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txttexto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txttextoKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txttexto);
 
         jLabel2.setText("Foto");
         jLabel2.setOpaque(true);
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setBackground(new java.awt.Color(153, 204, 255));
         jButton1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jButton1.setText("Tweet");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +122,7 @@ public class Timeline extends javax.swing.JPanel {
         paneltweets.setLayout(paneltweetsLayout);
         paneltweetsLayout.setHorizontalGroup(
             paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 665, Short.MAX_VALUE)
+            .addGap(0, 672, Short.MAX_VALUE)
         );
         paneltweetsLayout.setVerticalGroup(
             paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,30 +145,34 @@ public class Timeline extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(422, 422, 422))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
-                        .addComponent(jSeparator1))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(scrolltweets)
+            .addComponent(scrolltweets, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
             .addComponent(jSeparator3)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,6 +184,7 @@ public class Timeline extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       String texto=txttexto.getText();
+      if(!txttexto.getText().isEmpty()){
         try{
         logica.guardarTwit(texto);
         txttexto.setText("");
@@ -164,8 +196,94 @@ public class Timeline extends javax.swing.JPanel {
         }catch(IOException e){
              System.out.println("No se puede");
          } 
+      }else{
+          JOptionPane.showMessageDialog(null, "Tweet vacio");
+      }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void txttextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttextoKeyTyped
+    char tecla = evt.getKeyChar();
+    String texto = txttexto.getText() + tecla;
+
+    
+    try {
+        if (tecla == '@') {
+            mostrarVentanaSugerencias(texto);
+        } else if (Character.isWhitespace(tecla)) {
+            ocultarVentanaSugerencias();
+        }
+    } catch (IOException e) {
+        System.out.println("no @");
+    }
+
+        
+    }//GEN-LAST:event_txttextoKeyTyped
+
+    private void mostrarVentanaSugerencias(String texto) throws IOException {
+    ArrayList<String> sugerencias = obtenerSugerencias(texto);
+    listaSugerencias.setListData(sugerencias.toArray(new String[0]));
+
+    // Asociar el menú emergente al componente de texto
+    popupSugerencias.setInvoker(txttexto);
+
+    // Mostrar la ventana emergente cerca del '@' en el editor pane
+    Point posicion = txttexto.getCaret().getMagicCaretPosition();
+    if (posicion != null) {
+        popupSugerencias.show(txttexto, posicion.x, posicion.y + 20); // Ajusta la posición vertical
+        txttexto.requestFocusInWindow(); // Asegurar que el editor pane mantenga el foco
+    }
+}
+
+private void ocultarVentanaSugerencias() {
+    popupSugerencias.setVisible(false);
+    txttexto.requestFocusInWindow(); // Asegurar que el editor pane mantenga el foco
+}
+
+private ArrayList<String> obtenerSugerencias(String mencion) throws IOException {
+        // Lógica para obtener sugerencias de usuarios basadas en la mención
+        // Por ejemplo, podrías buscar usuarios que comiencen con la cadena mencionada
+
+        ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
+
+        ArrayList<String> sugerencias = new ArrayList<>();
+
+        if (!resultados.isEmpty()) {
+            for (String usuario : resultados) {
+                // Verificar si el usuario contiene la letra escrita
+                if (!usuario.equalsIgnoreCase(user.getUserlog()) && usuario.toLowerCase().contains(mencion.toLowerCase())) {
+                 sugerencias.add(usuario);
+                }
+
+            }
+        }
+
+        return sugerencias;
+    }
+
+
+
+     
+    
+    /*private String buscarusers() throws IOException{
+       String mencion=txtmencion.getText();
+       ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
+
+    StringBuilder resultBuilder = new StringBuilder();
+
+    if (!resultados.isEmpty()) {
+        for (String usuario : resultados) {
+            // Verificar si el usuario contiene la letra escrita
+            if (!usuario.equalsIgnoreCase(user.getUserlog())&& usuario.toLowerCase().contains(mencion.toLowerCase())) {
+                resultBuilder.append(usuario).append("\n");
+            }
+        }
+    }else
+        return  "No se encontraron usuarios";
+
+    return resultBuilder.toString();
+    }*/
+    
+    //subir tweets
 private void subirtweets() throws IOException {
     paneltweets.removeAll();
     paneltweets.setLayout(new BoxLayout(paneltweets, BoxLayout.Y_AXIS));

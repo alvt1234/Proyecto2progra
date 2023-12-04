@@ -95,21 +95,23 @@ public class UsersTwit {
     public String getUserlog() {
         return userlog;
     }
-//   private long buscarUsuario(String user) throws IOException {
-//   // registro.seek(0);
-//    while (registro.getFilePointer() < registro.length()) {
-//        long posActual = registro.getFilePointer();
-//        registro.readUTF();
-//        registro.readChar();
-//        String usuario = registro.readUTF();
-//        registro.readUTF();
-//        registro.readInt();
-//        if (usuario.equals(user)) {
-//            return posActual;
-//        }
-//    }
-//    return -1; // Usuario no encontrado
-//}
+ /* public long buscarUsuario(String user) throws IOException {
+//  // registro.seek(0);
+    while (registro.getFilePointer() < registro.length()) {
+        long posActual = registro.getFilePointer();
+        registro.readUTF();
+        registro.readChar();
+        String usuario = registro.readUTF();
+        registro.readUTF();
+        registro.readInt();
+        registro.readUTF();
+        registro.readBoolean();
+        if (usuario.equals(user)) {
+            return posActual;
+        }
+    }
+    return -1; // Usuario no encontrado
+}*/
 //
 //    
 //

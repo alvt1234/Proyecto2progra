@@ -1,5 +1,10 @@
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -8,6 +13,8 @@ public class MenuTwitter extends javax.swing.JFrame {
  
     String image1,image2,lupan,lupaA,campana,campanaA,user,userA,mas,masA;
    LogicaTwitter logica=new LogicaTwitter();
+   UsersTwit users=new UsersTwit();
+   Buscarusuarios buscar= new Buscarusuarios(users);
     public MenuTwitter() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -23,6 +30,22 @@ public class MenuTwitter extends javax.swing.JFrame {
         userA="src/imagentwitter/user_azul.png";
         mas="src/imagentwitter/mas.png";
         masA="src/imagentwitter/mas_azul.png";
+        scrollLista.setVisible(false);
+        listabuscar.addListSelectionListener(e -> {
+            try{
+            if (!e.getValueIsAdjusting()) {
+                // Obtener el nombre seleccionado
+                String nombreSeleccionado = listabuscar.getSelectedValue();
+                if(nombreSeleccionado!=null){
+                buscarparaelperfil(nombreSeleccionado);
+                scrollLista.setVisible(false);
+                }
+            }
+            }catch(IOException ex){
+            System.out.println("");
+        }
+        });
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -39,14 +62,19 @@ public class MenuTwitter extends javax.swing.JFrame {
         bttweet = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        txtbuscar = new javax.swing.JTextField();
+        scrollLista = new javax.swing.JScrollPane();
+        listabuscar = new javax.swing.JList<>();
         panelhome = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1606, 840));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/LogoTwitter.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 12, 71, 57));
 
         bthogar.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         bthogar.setForeground(new java.awt.Color(0, 153, 255));
@@ -60,6 +88,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 bthogarActionPerformed(evt);
             }
         });
+        jPanel1.add(bthogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 81, -1, 40));
 
         btexplorar.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btexplorar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/lupa.png"))); // NOI18N
@@ -72,6 +101,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 btexplorarActionPerformed(evt);
             }
         });
+        jPanel1.add(btexplorar, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 127, -1, 40));
 
         btnotificacion.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btnotificacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/campana.png"))); // NOI18N
@@ -84,6 +114,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 btnotificacionActionPerformed(evt);
             }
         });
+        jPanel1.add(btnotificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 173, -1, 40));
 
         btuser.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btuser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/user.png"))); // NOI18N
@@ -96,6 +127,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 btuserActionPerformed(evt);
             }
         });
+        jPanel1.add(btuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 225, -1, 40));
 
         btmas.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/mas.png"))); // NOI18N
@@ -108,6 +140,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 btmasActionPerformed(evt);
             }
         });
+        jPanel1.add(btmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 283, -1, 40));
 
         bttweet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagentwitter/Twit.png"))); // NOI18N
         bttweet.setBorderPainted(false);
@@ -117,6 +150,7 @@ public class MenuTwitter extends javax.swing.JFrame {
                 bttweetActionPerformed(evt);
             }
         });
+        jPanel1.add(bttweet, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 386, 174, 42));
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -124,79 +158,36 @@ public class MenuTwitter extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnotificacion)
-                            .addComponent(btexplorar)
-                            .addComponent(bthogar)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btmas)
-                                    .addComponent(btuser)
-                                    .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(134, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bthogar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btexplorar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnotificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btuser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btmas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(bttweet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(102, 102, 102))
-        );
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 715, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        txtbuscar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtbuscar.setForeground(new java.awt.Color(51, 51, 51));
+        txtbuscar.setText("Buscar");
+        txtbuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtbuscarMouseClicked(evt);
+            }
+        });
+        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 366, 40));
+
+        listabuscar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        scrollLista.setViewportView(listabuscar);
+
+        jPanel2.add(scrollLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 360, -1));
 
         panelhome.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout panelhomeLayout = new javax.swing.GroupLayout(panelhome);
-        panelhome.setLayout(panelhomeLayout);
-        panelhomeLayout.setHorizontalGroup(
-            panelhomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 683, Short.MAX_VALUE)
-        );
-        panelhomeLayout.setVerticalGroup(
-            panelhomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        panelhome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,22 +211,21 @@ public class MenuTwitter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bthogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthogarActionPerformed
-       botonesblack();
+        botonesblack();
        bthogar.setForeground(new Color(0, 153, 255));
        bthogar.setIcon(new ImageIcon(image2));
-       
        Timeline time=new Timeline(logica);
         crearpaneles(time);
     }//GEN-LAST:event_bthogarActionPerformed
 
     private void btexplorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexplorarActionPerformed
-       botonesblack();
+        botonesblack();
         btexplorar.setForeground(new Color(0, 153, 255));
         btexplorar.setIcon(new ImageIcon(lupaA));
     }//GEN-LAST:event_btexplorarActionPerformed
 
     private void btnotificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnotificacionActionPerformed
-      botonesblack();
+        botonesblack();
         btnotificacion.setForeground(new Color(0, 153, 255));
         btnotificacion.setIcon(new ImageIcon(campanaA));
     }//GEN-LAST:event_btnotificacionActionPerformed
@@ -265,7 +255,6 @@ public class MenuTwitter extends javax.swing.JFrame {
 
     private void bttweetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttweetActionPerformed
 
-
     }//GEN-LAST:event_bttweetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -274,6 +263,89 @@ public class MenuTwitter extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void txtbuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtbuscarMouseClicked
+        if(txtbuscar.getText().equals("Buscar")){
+            txtbuscar.setText("");
+            scrollLista.setVisible(true);
+        }
+       scrollLista.setVisible(true);
+       if(txtbuscar.getText().isEmpty()){
+           scrollLista.setVisible(false);
+       }
+        
+    }//GEN-LAST:event_txtbuscarMouseClicked
+
+    private void txtbuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyPressed
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+           
+       }
+    }//GEN-LAST:event_txtbuscarKeyPressed
+
+    private void txtbuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyTyped
+       DefaultListModel<String> listModel = new DefaultListModel<>();
+                listabuscar.setModel(listModel);
+        scrollLista.setVisible(true);
+        try {
+            String resultado = imprimirdatos();
+            if (!resultado.isEmpty()) {
+                // Limpiar el modelo antes de agregar nuevos resultados
+                
+                // Dividir el resultado por líneas y agregar cada línea al modelo
+                for (String linea : resultado.split("\n")) {
+                    listModel.addElement(linea);
+                }
+            } else {
+                listabuscar.clearSelection();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al imprimir los datos");
+        }
+    
+    }//GEN-LAST:event_txtbuscarKeyTyped
+
+   private String imprimirdatos() throws IOException {
+    String texto = txtbuscar.getText();
+    ArrayList<String> resultados = buscar.buscarUsuarios(texto);
+
+    StringBuilder resultBuilder = new StringBuilder();
+
+    if (!resultados.isEmpty()) {
+        for (String usuario : resultados) {
+            // Verificar si el usuario contiene la letra escrita
+            if (!usuario.equalsIgnoreCase(users.getUserlog())&& usuario.toLowerCase().contains(texto.toLowerCase())) {
+                resultBuilder.append(usuario).append("\n");
+            }
+        }
+    }else
+        return  "No se encontraron usuarios";
+
+    return resultBuilder.toString();
+}
+
+    public boolean buscarparaelperfil(String user) throws IOException{
+        
+        try (RandomAccessFile registro = new RandomAccessFile("Usertwit/user.twc", "rw")) {
+        while (registro.getFilePointer() < registro.length()) {
+            String nombre=registro.readUTF();
+            char gene=registro.readChar();
+            String usuario = registro.readUTF();
+            registro.readUTF(); 
+            int edad=registro.readInt();
+            String date=registro.readUTF();
+            registro.readBoolean();
+
+            if(user.equals(usuario)){
+                System.out.println("nombre: "+nombre);
+                Perfilusuarios perfil=new Perfilusuarios(nombre, gene, edad, usuario, date);
+                crearpaneles(perfil);
+                txtbuscar.setText("Buscar");
+              return true;
+            }
+           
+        }
+    } 
+        return false;
+    }
      private void crearpaneles(JPanel pa){
         pa.setSize(684, 840);
         pa.setLocation(0, 0);
@@ -293,8 +365,11 @@ public class MenuTwitter extends javax.swing.JFrame {
        btnotificacion.setForeground(Color.black);
        btuser.setForeground(Color.black);  
        btmas.setForeground(Color.black);  
+    //    panelbuscar.setText("");
+       txtbuscar.setText("Buscar");
+       scrollLista.setVisible(false);
     }
-    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btexplorar;
@@ -307,6 +382,9 @@ public class MenuTwitter extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JList<String> listabuscar;
     private javax.swing.JPanel panelhome;
+    private javax.swing.JScrollPane scrollLista;
+    private javax.swing.JTextField txtbuscar;
     // End of variables declaration//GEN-END:variables
 }
