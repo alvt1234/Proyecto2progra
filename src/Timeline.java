@@ -1,11 +1,19 @@
 
+import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
@@ -27,7 +35,7 @@ public class Timeline extends javax.swing.JPanel {
     public Timeline(LogicaTwitter logica) {
         initComponents();
         popupSugerencias=new JPopupMenu();
-        popupSugerencias.add(new JScrollPane(listaSugerencias));
+//        popupSugerencias.add(new JScrollPane(listaSugerencias));
        try{
        this.logica=logica;
        this.twits=logica.cargarTwits();
@@ -208,12 +216,34 @@ public class Timeline extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txttextoKeyTyped
 
-    private void mostrarVentanaSugerencias(String texto) throws IOException {
+    private void mostrarVentanaSugerencias(String texto) throws IOException{
+    String[] usuarios = user.obtenerUsuarios();
     ArrayList<String> sugerencias = obtenerSugerencias(texto);
+    
+    for (String usuario : usuarios) {
+            sugerencias.add(usuario);   
+    }
+        
     listaSugerencias.setListData(sugerencias.toArray(new String[0]));
-
+    
+    popupSugerencias.removeAll();
+   
     // Asociar el menú emergente al componente de texto
+       for (String sugerencia : sugerencias){
+        System.out.println("datos"+sugerencias);
+        JMenuItem menuItem = new JMenuItem(sugerencia);
+        menuItem.setBackground(Color.WHITE);
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {           
+               txttexto.setText(txttexto.getText() + menuItem.getText().toString());
+            }
+        });
+
+        popupSugerencias.add(menuItem);
+    }
     popupSugerencias.setInvoker(txttexto);
+
 
     // Mostrar la ventana emergente cerca del '@' en el editor pane
     Point posicion = txttexto.getCaret().getMagicCaretPosition();
@@ -223,6 +253,12 @@ public class Timeline extends javax.swing.JPanel {
     }
 }
 
+  
+ 
+    
+    
+    
+
 private void ocultarVentanaSugerencias() {
     popupSugerencias.setVisible(false);
     txttexto.requestFocusInWindow(); // Asegurar que el editor pane mantenga el foco
@@ -231,14 +267,16 @@ private void ocultarVentanaSugerencias() {
 private ArrayList<String> obtenerSugerencias(String mencion) throws IOException {
       
         ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
-
+        
         ArrayList<String> sugerencias = new ArrayList<>();
+        System.out.println("suge"+sugerencias);
 
         if (!resultados.isEmpty()) {
             for (String usuario : resultados) {
                 // Verificar si el usuario contiene la letra escrita
                 if (!usuario.equalsIgnoreCase(user.getUserlog()) && usuario.toLowerCase().contains(mencion.toLowerCase())) {
                  sugerencias.add(usuario);
+                   
                 }
 
             }

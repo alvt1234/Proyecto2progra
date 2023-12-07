@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 public class UsersTwit {
     private RandomAccessFile registro;
@@ -118,24 +119,45 @@ public class UsersTwit {
          } 
        return false;
     }
-   
- /* public long buscarUsuario(String user) throws IOException {
-//  // registro.seek(0);
-    while (registro.getFilePointer() < registro.length()) {
-        long posActual = registro.getFilePointer();
-        registro.readUTF();
-        registro.readChar();
-        String usuario = registro.readUTF();
-        registro.readUTF();
-        registro.readInt();
-        registro.readUTF();
-        registro.readBoolean();
-        if (usuario.equals(user)) {
-            return posActual;
+    
+    
+    public String[] obtenerUsuarios() throws IOException{
+        ArrayList<String> usuarios = new ArrayList<>();
+        registro.seek(0);
+
+        while (registro.getFilePointer() < registro.length()){
+            registro.readUTF(); 
+            registro.readChar(); 
+            String usuario = registro.readUTF(); 
+            registro.readUTF(); 
+            registro.readInt(); 
+            registro.readUTF(); 
+            registro.readBoolean(); 
+            usuarios.add(usuario);
         }
+        String[] usuariosArray = new String[usuarios.size()];
+        usuariosArray = usuarios.toArray(usuariosArray);
+        return usuariosArray;
     }
-    return -1; // Usuario no encontrado
-}*/
+
+   
+// public long buscarUsuario(String user) throws IOException {
+//  // registro.seek(0);
+//    while (registro.getFilePointer() < registro.length()) {
+//        long posActual = registro.getFilePointer();
+//        registro.readUTF();
+//        registro.readChar();
+//        String usuario = registro.readUTF();
+//        registro.readUTF();
+//        registro.readInt();
+//        registro.readUTF();
+//        registro.readBoolean();
+//        if (usuario.equals(user)) {
+//            return posActual;
+//        }
+//    }
+//    return -1; // Usuario no encontrado
+//}
 //
 //    
 //
