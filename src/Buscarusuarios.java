@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class Buscarusuarios {
  private UsersTwit users;
  private static String seguidos="Seguir",nombreselected;
- private RandomAccessFile siguiendo,seguidores,cantseguidores,cantsiguiendo;
+ private RandomAccessFile siguiendo,seguidores,cantseguidores,cantsiguiendo,follows,tweets;
+ //constructor
     public Buscarusuarios(UsersTwit users) {
         this.users = users;
         try{
@@ -20,12 +21,13 @@ public class Buscarusuarios {
         if(nombreselected!=null){
         cantseguidores=new RandomAccessFile("Usertwit/"+nombreselected+"/cantseguidores.xd", "rw");
         cantsiguiendo=new RandomAccessFile("Usertwit/"+users.getUserlog()+"/cantsiguiendo.xd", "rw");
-       // cantsiguiendo=new RandomAccessFile("Usertwit/"+users.getUserlog()+"/cantsiguiendo.xd", "rw");
+        follows=new RandomAccessFile("Usertwit/"+nombreselected+"/cantsiguiendo.xd", "rw");
         seguidores=new RandomAccessFile("Usertwit/" + nombreselected + "/followers.twc", "rw");
         initCodeseguidores();
         initCodeseguiendo();
+        initCodeseguiendonames();
+        cargartwitseg();
         }
-        
         }catch(IOException e){
                 System.out.println("No se guardo seguidores");    
         }
@@ -81,6 +83,36 @@ public class Buscarusuarios {
         cantsiguiendo.writeInt(code + 1);
         return code;
     }
+    //siguiendo demas
+     private void initCodeseguiendonames() throws IOException {
+        if (follows.length() == 0) {
+            follows.writeInt(0);
+        }
+    }
+    private int getCodesiguiendonames() throws IOException {
+     
+        follows.seek(0);
+        int code = follows.readInt();//1
+        follows.seek(0);
+        follows.writeInt(code + 1);
+        return code;
+    }
+    public void writesiguiendonames(String name)throws IOException{
+        if(name.equals(nombreselected)){
+            int cant=getCodesiguiendonames();
+            System.out.println("cant en write: "+cant);
+            cantsiguiendo.writeInt(cant);
+        }
+    }
+    public int getsiguiendonames() throws IOException{
+         follows.seek(0);
+         while(follows.getFilePointer()<follows.length()){
+         int cantSiguiendo= follows.readInt();
+         return cantSiguiendo;
+        }  
+        
+        return 0; 
+    }
     
     //Guardar a las personas que sigo
     public void guardarsiguiendo(String user,String texto)throws IOException{
@@ -119,19 +151,13 @@ public class Buscarusuarios {
     }
     //Para que se guarde el texto del boton (aveces funciona)
    public boolean textoboton(String nombr) throws IOException {
-       System.out.println("entra atexto boton");
     siguiendo.seek(0);
 
     while (siguiendo.getFilePointer() < siguiendo.length()) {
-        System.out.println("entra en el while");
         siguiendo.readInt();
-        System.out.println("depues del codigo");
         String name = siguiendo.readUTF();
-        System.out.println("despues del nombre");
         String text = siguiendo.readUTF();
-        System.out.println("antes del if");
         if (nombr.equals(name) && text.equals("Siguiendo")) {
-            System.out.println("entra al if");
             return true;
         }
 
@@ -208,6 +234,51 @@ public class Buscarusuarios {
                 }
             }
         }
+     }
+        
+    //leer el tweet de las personas
+  public ArrayList<String[]> Twitspersonas(String user) throws IOException {
+    ArrayList<String[]> mensajes = new ArrayList<>();
+    tweets = new RandomAccessFile("Usertwit/" + user + "/twits.twc", "rw");
+    tweets.seek(0);
+
+    while (tweets.getFilePointer() < tweets.length()) {
+        String[] temp = new String[3];
+        temp[0] = tweets.readUTF(); // usuario
+        temp[1] = tweets.readUTF(); // texto
+        temp[2] = tweets.readLong() + "";
+        
+        if (temp[0].equals(user)) {
+            mensajes.add(temp);
+        }
+    }
+
+    return mensajes.isEmpty() ? null : mensajes;
+}
+  
+//metodo para cargar los tweets
+public ArrayList<String[]> cargarTwits(String user) throws IOException {
+    ArrayList<String[]> twts = new ArrayList<>();
+
+    // Carga los propios twits
+    if (Twitspersonas(user) != null) {
+        twts.addAll(Twitspersonas(user));
+    }
+
+    return twts;
+}
+     public ArrayList cargartwitseg() throws IOException{
+         
+         ArrayList<String> followers=new ArrayList<>();
+         siguiendo.seek(0);
+         while(siguiendo.getFilePointer()<siguiendo.length()){
+             siguiendo.readInt();
+             String names=siguiendo.readUTF();
+             siguiendo.readUTF();
+              followers.add(names);
+              System.out.println("Seguidores en cargartitseg: "+followers);
+         }
+         return followers;
      }
 
     public String getSeguidos() {

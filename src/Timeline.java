@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 
@@ -25,6 +28,7 @@ public class Timeline extends javax.swing.JPanel {
     UsersTwit user=new UsersTwit();
     LogicaTwitter logica;
     Buscarusuarios buscar=new Buscarusuarios(user);
+    private Set<String> tweetsSet = new HashSet<>();
     private ArrayList<String[]> twits;
     private JPopupMenu popupSugerencias;
     public Timeline(LogicaTwitter logica) {
@@ -35,7 +39,9 @@ public class Timeline extends javax.swing.JPanel {
        this.logica=logica;
        this.twits=logica.cargarTwits();
        subirtweets();
+       cargartwitssiguiendo();
        }catch(IOException e){
+           e.printStackTrace();
             System.out.println("error en cargar ");
         }
      
@@ -250,11 +256,6 @@ public class Timeline extends javax.swing.JPanel {
     }
 }
 
-  
- 
-    
-    
-    
 
 private void ocultarVentanaSugerencias() {
     popupSugerencias.setVisible(false);
@@ -283,38 +284,90 @@ private ArrayList<String> obtenerSugerencias(String mencion) throws IOException 
     }
 
 
-    //subir tweets
+
 private void subirtweets() throws IOException {
     paneltweets.removeAll();
     paneltweets.setLayout(new BoxLayout(paneltweets, BoxLayout.Y_AXIS));
 
+    // Panel para los tweets del usuario logueado
+    JPanel panelTweetsUsuario = new JPanel();
+    panelTweetsUsuario.setLayout(new BoxLayout(panelTweetsUsuario, BoxLayout.Y_AXIS));
+
     twits = logica.cargarTwits();
 
     if (!twits.isEmpty()) {
+        // Limpiar el conjunto de tweets antes de agregar nuevos
+        tweetsSet.clear();
+
         // Iterar en orden inverso para agregar los nuevos tweets al principio
         for (int i = twits.size() - 1; i >= 0; i--) {
             String[] tweet = twits.get(i);
-            String usuario = tweet[0];
-            String texto = tweet[1];
-            String fecha = tweet[2];
+            String identificador = tweet[1] + tweet[2]; // Identificador único
 
-            long tiempoEnMilisegundos = Long.parseLong(fecha);
-            Date fechadate = new Date(tiempoEnMilisegundos);
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            String fechaFormateada = formatoFecha.format(fechadate);
+            // Agregar tweet solo si no existe en el conjunto
+            if (!tweetsSet.contains(identificador)) {
+                tweetsSet.add(identificador);
 
-            Tweets twee = new Tweets(usuario, texto, fechaFormateada);
-            paneltweets.add(twee);
+                String usuario = tweet[0];
+                String texto = tweet[1];
+                String fecha = tweet[2];
+
+                long tiempoEnMilisegundos = Long.parseLong(fecha);
+                Date fechadate = new Date(tiempoEnMilisegundos);
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String fechaFormateada = formatoFecha.format(fechadate);
+
+                Tweets twee = new Tweets(usuario, texto, fechaFormateada);
+                panelTweetsUsuario.add(twee);
+            }
         }
+    }
 
-        paneltweets.revalidate();
-        paneltweets.repaint();
-        scrolltweets.revalidate();
-        scrolltweets.repaint();
+    // Agregar panel de tweets del usuario logueado al panel general
+    paneltweets.add(panelTweetsUsuario);
 
-        // Mover la barra de desplazamiento al final
-        JScrollBar barra = scrolltweets.getVerticalScrollBar();
-        barra.setValue(barra.getMaximum());
+    // Cargar y agregar los tweets de los seguidores
+    cargartwitssiguiendo();
+
+    // Revalidar y repintar el panel general
+    paneltweets.revalidate();
+    paneltweets.repaint();
+    scrolltweets.revalidate();
+    scrolltweets.repaint();
+
+    // Mover la barra de desplazamiento al final
+    JScrollBar barra = scrolltweets.getVerticalScrollBar();
+    barra.setValue(barra.getMaximum());
+}
+
+private void cargartwitssiguiendo() throws IOException {
+    ArrayList<String> twitssiguiendo = buscar.cargartwitseg();
+
+    for (String usuario : twitssiguiendo) {
+        ArrayList<String[]> twitsUsuario = buscar.cargarTwits(usuario);
+
+        if (twitsUsuario != null) {
+            for (int i = twitsUsuario.size() - 1; i >= 0; i--) {
+                String[] tweet = twitsUsuario.get(i);
+                String identificador = tweet[1] + tweet[2]; // Identificador único
+
+                // Agregar tweet solo si no existe en el conjunto
+                if (!tweetsSet.contains(identificador)) {
+                    tweetsSet.add(identificador);
+
+                    String texto = tweet[1];
+                    String fecha = tweet[2];
+
+                    long tiempoEnMilisegundos = Long.parseLong(fecha);
+                    Date fechadate = new Date(tiempoEnMilisegundos);
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String fechaFormateada = formatoFecha.format(fechadate);
+
+                    Tweets twee = new Tweets(usuario, texto, fechaFormateada);
+                    paneltweets.add(twee);
+                }
+            }
+        }
     }
 }
 

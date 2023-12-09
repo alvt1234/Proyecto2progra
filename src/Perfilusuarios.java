@@ -41,7 +41,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         try{
             tweets = new RandomAccessFile("Usertwit/" + use + "/twits.twc", "rw");
             subirtweets(use);
-            lbsiguiendo.setText(buscar.getsiguiendo()+" Siguiendo");
+            lbsiguiendo.setText(buscar.getsiguiendonames()+" Siguiendo");
             lbseguidores.setText(buscar.getseguidores()+" Seguidores");
             System.out.println("Texto boton en perfil: "+buscar.textoboton(userseleccionado));
             
@@ -58,37 +58,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         }
         
     }
-    
-    //leer el tweet de las personas
-  public ArrayList<String[]> Twitspersonas(String user) throws IOException {
-    ArrayList<String[]> mensajes = new ArrayList<>();
-    tweets.seek(0);
-
-    while (tweets.getFilePointer() < tweets.length()) {
-        String[] temp = new String[3];
-        temp[0] = tweets.readUTF(); // usuario
-        temp[1] = tweets.readUTF(); // texto
-        temp[2] = tweets.readLong() + "";
-        
-        if (temp[0].equals(user)) {
-            mensajes.add(temp);
-        }
-    }
-
-    return mensajes.isEmpty() ? null : mensajes;
-}
-  
-//metodo para cargar los tweets
-public ArrayList<String[]> cargarTwits(String user) throws IOException {
-    ArrayList<String[]> twts = new ArrayList<>();
-
-    // Carga los propios twits
-    if (Twitspersonas(user) != null) {
-        twts.addAll(Twitspersonas(user));
-    }
-
-    return twts;
-}
+ 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -206,6 +176,7 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
             if(contar==1){
             estado="Siguiendo";
              btseguir.setText("Siguiendo");
+           //  buscar.writesiguiendonames(use);
             buscar.guardarsiguiendo(use,estado);
             lbseguidores.setText(buscar.getseguidores()+" Seguidores");
             }else if(contar==2){
@@ -228,7 +199,7 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
      paneltweets.removeAll();
     paneltweets.setLayout(new BoxLayout(paneltweets, BoxLayout.Y_AXIS));
     
-    twits = cargarTwits(user);
+    twits = buscar.cargarTwits(user);
 
     if (!twits.isEmpty()) {
         // Iterar en orden inverso para agregar los nuevos tweets al principio

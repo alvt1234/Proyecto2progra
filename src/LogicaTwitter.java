@@ -21,24 +21,6 @@ public class LogicaTwitter {
             System.out.println("NO SE ENCONTRO");
         }
     }
-   /* public void guardarFotoDePerfil(File selectedFile) {
-        try {
-
-            String userHome = System.getProperty("user.home");
-
-            String profileFolderPath = userHome + File.separator + "FotosDePerfil";
-
-            Files.createDirectories(Paths.get(profileFolderPath));
-
-            String destinationPath = profileFolderPath + File.separator + selectedFile.getName();
-
-            Files.copy(selectedFile.toPath(), Paths.get(destinationPath), StandardCopyOption.REPLACE_EXISTING);
-
-            System.out.println("Foto de perfil guardada con éxito en: " + destinationPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
    
      public void guardarTwit(String txt) throws IOException {
         tweets.seek(tweets.length());
