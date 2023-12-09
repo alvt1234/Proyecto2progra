@@ -6,18 +6,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 
 /**
@@ -206,7 +201,9 @@ public class Timeline extends javax.swing.JPanel {
     try {
         if (tecla == '@') {
             mostrarVentanaSugerencias(texto);
+            txttexto.setForeground(Color.blue);
         } else if (Character.isWhitespace(tecla)) {
+            txttexto.setForeground(new Color(102, 102, 102));
             ocultarVentanaSugerencias();
         }
     } catch (IOException e) {

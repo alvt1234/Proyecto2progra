@@ -18,8 +18,10 @@ import javax.swing.JScrollBar;
  */
 public class Perfil extends javax.swing.JPanel {
 
+    private RandomAccessFile siguiendo,seguidores,cantseguidores,cantsiguiendo;
     LogicaTwitter logica=new LogicaTwitter();
     UsersTwit userstwit=new UsersTwit();
+    Buscarusuarios buscar=new Buscarusuarios(userstwit);
     private String name,use,fec;
     private char ge;
     private int age,contar=0;
@@ -37,10 +39,33 @@ public class Perfil extends javax.swing.JPanel {
         lbedad.setText(age+" Años");
         lbfecha.setText("Se unio el "+fec);
         try{
+        cantseguidores=new RandomAccessFile("Usertwit/"+userstwit.getUserlog()+"/cantseguidores.xd", "rw");
+        cantsiguiendo=new RandomAccessFile("Usertwit/"+userstwit.getUserlog()+"/cantsiguiendo.xd", "rw");
+        lbseguidores1.setText(getseguidores()+" Seguidores");
+        lbsiguiendo.setText(getsiguiendo()+" Siguiendo");
         subirtweets();
         }catch(IOException e){
             System.out.println("No se pudo subir los tweets"); 
         }
+    }
+    private int getsiguiendo() throws IOException{
+    cantsiguiendo.seek(0);
+    while(cantsiguiendo.getFilePointer()<cantsiguiendo.length()){
+    int cantSiguiendo= cantsiguiendo.readInt();
+     return cantSiguiendo;
+    }
+    return 0;
+    }
+    //numero de seguidores
+    private int getseguidores()throws IOException{
+        System.out.println("entra al get seguidores");
+        cantseguidores.seek(0);
+        while(cantseguidores.getFilePointer()<cantseguidores.length()){
+         int cantseguidore= cantseguidores.readInt();
+            System.out.println("cantseguidores: "+cantseguidore);
+             return cantseguidore;
+        }
+        return 0;
     }
 private void subirtweets() throws IOException {
     paneltweets.removeAll();
@@ -132,8 +157,8 @@ private void subirtweets() throws IOException {
         add(lbedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 160, 30));
 
         lbsiguiendo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbsiguiendo.setText("Siguiendo");
-        add(lbsiguiendo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 80, 30));
+        lbsiguiendo.setText("0 Siguiendo");
+        add(lbsiguiendo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 90, 30));
 
         lbseguidores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbseguidores.setForeground(new java.awt.Color(255, 0, 51));
@@ -170,8 +195,8 @@ private void subirtweets() throws IOException {
         add(scrolltweets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 690, 570));
 
         lbseguidores1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbseguidores1.setText("Seguidores");
-        add(lbseguidores1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 80, 30));
+        lbseguidores1.setText("0 Seguidores");
+        add(lbseguidores1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbseguidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbseguidoresMouseClicked

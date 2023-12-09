@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 public class MenuTwitter extends javax.swing.JFrame {
  
+    private static String nombreSeleccionado;
     String image1,image2,lupan,lupaA,campana,campanaA,user,userA,mas,masA;
    LogicaTwitter logica=new LogicaTwitter();
    UsersTwit users=new UsersTwit();
@@ -36,7 +37,8 @@ public class MenuTwitter extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 // Obtener el nombre seleccionado
                 
-                String nombreSeleccionado = listabuscar.getSelectedValue();
+                nombreSeleccionado = listabuscar.getSelectedValue();
+                buscar.setNombreselected(nombreSeleccionado);
                 if(nombreSeleccionado!=null){
                 buscarparaelperfil(nombreSeleccionado);
                 scrollLista.setVisible(false);

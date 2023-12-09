@@ -40,18 +40,20 @@ public class Perfilusuarios extends javax.swing.JPanel {
         
         try{
             tweets = new RandomAccessFile("Usertwit/" + use + "/twits.twc", "rw");
-            siguiendo=new RandomAccessFile("Usertwit/" + users.getUserlog() + "/following.twc", "rw");
-            seguidores=new RandomAccessFile("Usertwit/" + userseleccionado + "/followers.twc", "rw");
             subirtweets(use);
-        lbsiguiendo.setText(buscar.getsiguiendo()+" Siguiendo");
-        if(buscar.textoboton(name)){
+            lbsiguiendo.setText(buscar.getsiguiendo()+" Siguiendo");
+            lbseguidores.setText(buscar.getseguidores()+" Seguidores");
+            System.out.println("Texto boton en perfil: "+buscar.textoboton(userseleccionado));
+            
+        if(buscar.textoboton(userseleccionado)){
             contar++;
           btseguir.setText("Siguiendo");
-        }else
-            
+        }else{
           btseguir.setText("Seguir");
+        }
         }catch(IOException e){
-        
+            e.printStackTrace();
+            System.out.println("no lee los archivos");
         
         }
         
@@ -129,15 +131,15 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
         jPanel1.add(lbname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 180, 30));
 
         lbseguidores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbseguidores.setText("Seguidores");
-        jPanel1.add(lbseguidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 80, 30));
+        lbseguidores.setText("0 Seguidores");
+        jPanel1.add(lbseguidores, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 130, 30));
 
         lbname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbname.setText("Nombre");
         jPanel1.add(lbname, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 160, 30));
 
         lbsiguiendo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbsiguiendo.setText("Siguiendo");
+        lbsiguiendo.setText("0 Siguiendo");
         jPanel1.add(lbsiguiendo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 80, 30));
 
         btseguir.setBackground(new java.awt.Color(153, 204, 255));
@@ -201,17 +203,18 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
         contar++;
         
         try{
+            if(contar==1){
             estado="Siguiendo";
              btseguir.setText("Siguiendo");
             buscar.guardarsiguiendo(use,estado);
-        if(contar==2){
+            lbseguidores.setText(buscar.getseguidores()+" Seguidores");
+            }else if(contar==2){
             int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta seguro que desea dejar de seguir\n a este usuario?");
         if (opcion == JOptionPane.YES_OPTION) {
             contar=0;
             estado ="Seguir";
             btseguir.setText("Seguir");
-            buscar.guardarsiguiendo(use,estado);
-            buscar.dejardeseguir(use, estado);
+            buscar.dejarDeSeguir(users.getUserlog(), use);
         } else if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CANCEL_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
         } 
         }
