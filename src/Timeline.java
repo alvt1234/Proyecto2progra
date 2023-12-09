@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
@@ -185,6 +186,9 @@ public class Timeline extends javax.swing.JPanel {
       if(!txttexto.getText().isEmpty()){
         try{
         logica.guardarTwit(texto);
+        buscar.buscarmenciones(texto);
+        List<String> hashtags = logica.extraerHashtags(texto);
+            logica.guardarHashtagsEnArchivo(hashtags);
         txttexto.setText("");
         subirtweets();
         this.revalidate();
@@ -207,11 +211,13 @@ public class Timeline extends javax.swing.JPanel {
     try {
         if (tecla == '@') {
             mostrarVentanaSugerencias(texto);
+            
             txttexto.setForeground(Color.blue);
         } else if (Character.isWhitespace(tecla)) {
             txttexto.setForeground(new Color(102, 102, 102));
             ocultarVentanaSugerencias();
         }
+       
     } catch (IOException e) {
         System.out.println("no @");
     }
@@ -261,10 +267,11 @@ private void ocultarVentanaSugerencias() {
     popupSugerencias.setVisible(false);
     txttexto.requestFocusInWindow(); // Asegurar que el editor pane mantenga el foco
 }
-
+//sugerencias
 private ArrayList<String> obtenerSugerencias(String mencion) throws IOException {
       
         ArrayList<String> resultados = buscar.buscarUsuarios(mencion);
+        
         
         ArrayList<String> sugerencias = new ArrayList<>();
         System.out.println("suge"+sugerencias);

@@ -176,17 +176,18 @@ public class Perfilusuarios extends javax.swing.JPanel {
             if(contar==1){
             estado="Siguiendo";
              btseguir.setText("Siguiendo");
-           //  buscar.writesiguiendonames(use);
             buscar.guardarsiguiendo(use,estado);
             lbseguidores.setText(buscar.getseguidores()+" Seguidores");
             }else if(contar==2){
             int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta seguro que desea dejar de seguir\n a este usuario?");
-        if (opcion == JOptionPane.YES_OPTION) {
+            if (opcion == JOptionPane.YES_OPTION) {
             contar=0;
             estado ="Seguir";
             btseguir.setText("Seguir");
             buscar.dejarDeSeguir(users.getUserlog(), use);
+            lbseguidores.setText(buscar.getseguidores()+" Seguidores");
         } else if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CANCEL_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
+            contar=1;
         } 
         }
         

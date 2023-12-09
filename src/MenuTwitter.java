@@ -225,12 +225,16 @@ public class MenuTwitter extends javax.swing.JFrame {
         botonesblack();
         btexplorar.setForeground(new Color(0, 153, 255));
         btexplorar.setIcon(new ImageIcon(lupaA));
+        buscarhashtag hash=new buscarhashtag();
+        crearpaneles(hash);
     }//GEN-LAST:event_btexplorarActionPerformed
 
     private void btnotificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnotificacionActionPerformed
         botonesblack();
         btnotificacion.setForeground(new Color(0, 153, 255));
         btnotificacion.setIcon(new ImageIcon(campanaA));
+        Interacciones intera=new Interacciones();
+        crearpaneles(intera);
     }//GEN-LAST:event_btnotificacionActionPerformed
 
     private void btuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btuserActionPerformed

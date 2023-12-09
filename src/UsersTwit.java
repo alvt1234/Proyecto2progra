@@ -133,12 +133,14 @@ public class UsersTwit {
             registro.readInt(); 
             registro.readUTF(); 
             registro.readBoolean(); 
+            if(!usuario.equals(userlog))
             usuarios.add(usuario);
         }
         String[] usuariosArray = new String[usuarios.size()];
         usuariosArray = usuarios.toArray(usuariosArray);
         return usuariosArray;
     }
+    
 
    
 // public long buscarUsuario(String user) throws IOException {
