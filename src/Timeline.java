@@ -187,8 +187,10 @@ public class Timeline extends javax.swing.JPanel {
         try{
         logica.guardarTwit(texto);
         buscar.buscarmenciones(texto);
+        if(!txttexto.getText().isEmpty()){
         List<String> hashtags = logica.extraerHashtags(texto);
             logica.guardarHashtagsEnArchivo(hashtags);
+        }
         txttexto.setText("");
         subirtweets();
         this.revalidate();
