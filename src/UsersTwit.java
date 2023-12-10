@@ -86,14 +86,9 @@ public class UsersTwit {
             boolean activa=registro.readBoolean();
              System.out.println("usuario: "+usuario+"activa: "+activa);
             if(user.equals(usuario.trim()) && contra.equals(password.trim())){
-               if(activa){
                    userlog=user;
                    return true;
-               }else{
-                   JOptionPane.showMessageDialog(null, "cuenta desac");
-                   activarcuenta(user);
-                   return false;
-               }
+               
             } 
             
                  
@@ -120,9 +115,10 @@ public class UsersTwit {
             boolean activa = registro.readBoolean();
 
             if (userlog.equals(usuario)) {
-                tempFile.seek(tempFile.getFilePointer()); // Retroceder para sobrescribir el booleano activo
+                tempFile.seek(tempFile.getFilePointer()-1); // Retroceder para sobrescribir el booleano activo
                 tempFile.writeBoolean(false); // Desactivar la cuenta
-                
+              
+                break;
             }
 
             tempFile.writeUTF(nombre);
@@ -152,8 +148,9 @@ public void activarcuenta(String user) throws IOException {
             boolean activa = registro.readBoolean();
 
             if (user.equals(usuario)) {
-                tempFile.seek(tempFile.getFilePointer()); // Retroceder para sobrescribir el booleano activo
+                tempFile.seek(tempFile.getFilePointer()-1); // Retroceder para sobrescribir el booleano activo
                 tempFile.writeBoolean(true); // Activar la cuenta
+                  JOptionPane.showMessageDialog(null, "Se reactivo su cuenta");
             }
 
             // Continuar escribiendo los demás datos
