@@ -19,8 +19,10 @@ import javax.swing.JScrollBar;
 public class Perfil extends javax.swing.JPanel {
 
     private RandomAccessFile siguiendo,seguidores,cantseguidores,cantsiguiendo;
+    LoginTwitter login=new LoginTwitter();
     LogicaTwitter logica=new LogicaTwitter();
     UsersTwit userstwit=new UsersTwit();
+    Foto foto=new Foto(login);
     Buscarusuarios buscar=new Buscarusuarios(userstwit);
     private String name,use,fec;
     private char ge;
@@ -43,6 +45,13 @@ public class Perfil extends javax.swing.JPanel {
         cantsiguiendo=new RandomAccessFile("Usertwit/"+userstwit.getUserlog()+"/cantsiguiendo.xd", "rw");
         lbseguidores1.setText(getseguidores()+" Seguidores");
         lbsiguiendo.setText(getsiguiendo()+" Siguiendo");
+        ImageIcon icono = foto.seticon(userstwit.getUserlog(), foto.getRutaImagen(), null,160,160);
+        if(icono==null){
+        lbfoto.setIcon(icono);
+        }else{
+            lbfoto.setIcon(userstwit.cargarFotoPerfil(userstwit.getUserlog(),160,160));
+        }
+            
         subirtweets();
         }catch(IOException e){
             System.out.println("No se pudo subir los tweets"); 
@@ -102,6 +111,7 @@ private void subirtweets() throws IOException {
         barra.setValue(barra.getMaximum());
     }
 }
+   
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -131,7 +141,7 @@ private void subirtweets() throws IOException {
 
         lbfoto.setText("Foto");
         lbfoto.setOpaque(true);
-        add(lbfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 140));
+        add(lbfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 150));
 
         lbusuario.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lbusuario.setText("Usuario");

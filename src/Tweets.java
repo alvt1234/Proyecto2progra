@@ -1,4 +1,8 @@
 
+import java.io.IOException;
+import javax.swing.ImageIcon;
+
+
 
 /**
  *
@@ -8,6 +12,8 @@ public class Tweets extends javax.swing.JPanel {
 
     fotoperfil perfil=new fotoperfil(45,5,2,45,45);
     UsersTwit users=new UsersTwit();
+    LoginTwitter login=new LoginTwitter();
+    Foto foto=new Foto(login);
     private String text;
     public Tweets(String user,String texto,String fecha) {
         initComponents();
@@ -20,6 +26,16 @@ public class Tweets extends javax.swing.JPanel {
         lbnombre.setText(user);
         areafondo.setText(text);
         lbfecha.setText(fecha);
+        try{
+        ImageIcon icono = foto.seticon(users.getUserlog(), foto.getRutaImagen(), null,50,50);
+        if(icono==null){
+        lbfoto.setIcon(icono);
+        }else{
+            lbfoto.setIcon(users.cargarFotoPerfil(users.getUserlog(),50,50));
+        }
+        }catch(IOException e){
+            System.out.println("No se pudo cargar la fot");
+        }
         
     }
 
@@ -33,6 +49,7 @@ public class Tweets extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         areafondo = new javax.swing.JTextArea();
         lbfecha = new javax.swing.JLabel();
+        lbfoto = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(684, 180));
@@ -76,6 +93,8 @@ public class Tweets extends javax.swing.JPanel {
         lbfecha.setForeground(new java.awt.Color(0, 153, 255));
         lbfecha.setText("Fecha");
 
+        lbfoto.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,14 +102,16 @@ public class Tweets extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(lbfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(64, 64, 64)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbfoto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,7 +119,9 @@ public class Tweets extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbfoto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(lbfecha)))
@@ -115,6 +138,7 @@ public class Tweets extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbfecha;
+    private javax.swing.JLabel lbfoto;
     private javax.swing.JLabel lbnombre;
     private javax.swing.JPanel panelfondo;
     // End of variables declaration//GEN-END:variables

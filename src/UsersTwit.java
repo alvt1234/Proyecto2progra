@@ -1,8 +1,15 @@
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class UsersTwit {
     private RandomAccessFile registro;
@@ -76,13 +83,14 @@ public class UsersTwit {
                 userlog=user;
                 return true;
             }
+                
                  
          }
-           
+           JOptionPane.showMessageDialog(null, "Usuario inexistente");
          return false;
      }
   
-    public void fotoperfil(String user, File fotoperfil) throws IOException {
+  /*  public void fotoperfil(String user, File fotoperfil) throws IOException {
     // Obtener la ruta de la foto
     String rutafoto = fotoperfil.getAbsolutePath();
 
@@ -97,7 +105,21 @@ public class UsersTwit {
       RandomAccessFile archivoFotoPerfil = new RandomAccessFile(rutaArchivoFoto, "rw");
        String foto= archivoFotoPerfil.readUTF();
        return foto;
+    }*/
+ /*   public void guardarFotoPerfil(String user,byte[] imagenBytes) throws IOException {
+        String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";  
+        Path pathArchivo = Path.of(rutaArchivoFoto);
+        Files.write(pathArchivo, imagenBytes);
     }
+
+    public ImageIcon cargarFotoPerfil(String user,int ancho,int alto) throws IOException {
+    String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";
+    Path pathArchivo = Path.of(rutaArchivoFoto);
+    byte[] bytes = Files.readAllBytes(pathArchivo);
+    Image img = Toolkit.getDefaultToolkit().createImage(bytes);
+    Image scaledImg = img.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+    return new ImageIcon(scaledImg);
+}*/
 
     public String getUserlog() {
         return userlog;
@@ -140,50 +162,33 @@ public class UsersTwit {
         usuariosArray = usuarios.toArray(usuariosArray);
         return usuariosArray;
     }
-    
 
-   
-// public long buscarUsuario(String user) throws IOException {
-//  // registro.seek(0);
-//    while (registro.getFilePointer() < registro.length()) {
-//        long posActual = registro.getFilePointer();
-//        registro.readUTF();
-//        registro.readChar();
-//        String usuario = registro.readUTF();
-//        registro.readUTF();
-//        registro.readInt();
-//        registro.readUTF();
-//        registro.readBoolean();
-//        if (usuario.equals(user)) {
-//            return posActual;
-//        }
-//    }
-//    return -1; // Usuario no encontrado
-//}
-//
-//    
-//
-//public ImageIcon obtenerFotoPerfil(String user) throws IOException {
-//    long posUsuario = buscarUsuario(user);
-//
-//    if (posUsuario != -1) {
-//        registro.seek(posUsuario);
-//        registro.readUTF();
-//        registro.readChar();
-//        registro.readUTF();
-//        registro.readUTF();
-//        registro.readInt();
-//
-//        // Leer la ruta de la foto del usuario
-//        String rutaFoto = registro.readUTF();
-//
-//        // Crear un ImageIcon a partir de la ruta de la foto
-//        ImageIcon fotoIcon = new ImageIcon(rutaFoto);
-//
-//        return fotoIcon;
-//    } else {
-//        System.out.println("El usuario no existe");
-//        return null;
-//    }
-//}
+     public void guardarFotoPerfil(String rutaOrigen) throws IOException {
+        String rutaDestino = "Usertwit/" + userlog + "/foto_perfil.png";
+        
+        Path origenPath = Path.of(rutaOrigen);
+        Path destinoPath = Path.of(rutaDestino);
+
+        Files.copy(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
+    }
+     public ImageIcon cargarFotoPerfil(String user,int ancho,int largo) throws IOException {
+    String rutaArchivoFoto = "Usertwit/" + user + "/foto_perfil.png";
+    Path pathArchivo = Path.of(rutaArchivoFoto);
+    
+    if (Files.exists(pathArchivo)) {
+        byte[] bytes = Files.readAllBytes(pathArchivo);
+        Image img = Toolkit.getDefaultToolkit().createImage(bytes);
+        Image scaledImg = img.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImg);
+    } else {
+        ImageIcon image;
+        image = new ImageIcon(getClass().getResource("/imagentwitter/usuario.jpg"));
+        Image img = image.getImage();
+        img = img.getScaledInstance(ancho,largo, Image.SCALE_SMOOTH);
+       ImageIcon scaledIcon = new ImageIcon(img);
+       return scaledIcon;
+    }
+}
+
+     
 }

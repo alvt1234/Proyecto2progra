@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 
@@ -19,6 +20,8 @@ public class Perfilusuarios extends javax.swing.JPanel {
     private char ge;
     private int age,contar=0;
     private RandomAccessFile siguiendo,seguidores,tweets;
+    LoginTwitter login=new LoginTwitter();
+    Foto foto=new Foto(login);
     UsersTwit users=new UsersTwit();
      private ArrayList<String[]> twits;
     Buscarusuarios buscar=new Buscarusuarios(users);
@@ -44,7 +47,12 @@ public class Perfilusuarios extends javax.swing.JPanel {
             lbsiguiendo.setText(buscar.getsiguiendonames()+" Siguiendo");
             lbseguidores.setText(buscar.getseguidores()+" Seguidores");
             System.out.println("Texto boton en perfil: "+buscar.textoboton(userseleccionado));
-            
+            ImageIcon icono = foto.seticon(use, foto.getRutaImagen(), null,160,160);
+        if(icono==null){
+        lbfoto.setIcon(icono);
+        }else{
+            lbfoto.setIcon(users.cargarFotoPerfil(use,160,160));
+        }
         if(buscar.textoboton(userseleccionado)){
             contar++;
           btseguir.setText("Siguiendo");
