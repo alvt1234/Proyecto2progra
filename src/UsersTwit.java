@@ -1,6 +1,9 @@
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -8,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -172,22 +176,50 @@ public class UsersTwit {
         Files.copy(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
     }
      public ImageIcon cargarFotoPerfil(String user,int ancho,int largo) throws IOException {
-    String rutaArchivoFoto = "Usertwit/" + user + "/foto_perfil.png";
-    Path pathArchivo = Path.of(rutaArchivoFoto);
-    
-    if (Files.exists(pathArchivo)) {
-        byte[] bytes = Files.readAllBytes(pathArchivo);
-        Image img = Toolkit.getDefaultToolkit().createImage(bytes);
-        Image scaledImg = img.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImg);
-    } else {
-        ImageIcon image;
-        image = new ImageIcon(getClass().getResource("/imagentwitter/usuario.jpg"));
-        Image img = image.getImage();
-        img = img.getScaledInstance(ancho,largo, Image.SCALE_SMOOTH);
-       ImageIcon scaledIcon = new ImageIcon(img);
-       return scaledIcon;
+     String rutaArchivoFoto = "Usertwit/" + user + "/foto_perfil.png";
+        Path pathArchivo = Path.of(rutaArchivoFoto);
+
+        try {
+            if (Files.exists(pathArchivo)) {
+                BufferedImage img = ImageIO.read(pathArchivo.toFile());
+                Image imgRedonda = redondearImagen(img);
+                Image scaledImg = imgRedonda.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImg);
+            } else {
+                return obtenerImagenPredeterminada(ancho, largo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         return obtenerImagenPredeterminada(ancho, largo);
+}
+ private Image redondearImagen(Image img) {
+    int ancho = img.getWidth(null);
+    int alto = img.getHeight(null);
+
+    if (ancho <= 0 || alto <= 0) {
+        // Si las dimensiones son no válidas, devuelve la imagen original sin redondear
+        return img;
     }
+
+    int radio = Math.min(ancho, alto) / 2;
+    BufferedImage imagenRedonda = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = imagenRedonda.createGraphics();
+    g.setClip(new Ellipse2D.Float(0, 0, ancho, alto));
+    g.drawImage(img, 0, 0, null);
+    g.dispose();
+
+    return imagenRedonda;
+}
+
+
+
+   private ImageIcon obtenerImagenPredeterminada(int ancho, int largo) {
+    ImageIcon image = new ImageIcon(getClass().getResource("/imagentwitter/usuario.jpg"));
+    Image img = image.getImage();
+    img = img.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
+    Image imgRedonda = redondearImagen(img);
+    return new ImageIcon(imgRedonda);
 }
 
      

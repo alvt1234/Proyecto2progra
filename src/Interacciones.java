@@ -25,33 +25,33 @@ public class Interacciones extends javax.swing.JPanel {
         }
     }
  private void subirtweets() throws IOException {
-        panelmenciones.removeAll();
-        panelmenciones.setLayout(new BoxLayout(panelmenciones, BoxLayout.Y_AXIS));
+    panelmenciones.removeAll();
+    panelmenciones.setLayout(new BoxLayout(panelmenciones, BoxLayout.Y_AXIS));
 
-        ArrayList<String> usuarios = buscar.buscarUsers();
+    ArrayList<String> usuarios = buscar.buscarUsers();
 
-        for (String usuario : usuarios) {
-            System.out.println("usuarios almacenados: "+usuario);
-            twits = buscar.cargarTwitsmencion(usuario);
+    for (String usuario : usuarios) {
+        System.out.println("usuarios almacenados: " + usuario);
+        twits = buscar.cargarTwitsmencion(usuario);
 
-            if (twits != null && !twits.isEmpty()) {
-                // Iterar en orden inverso para agregar los nuevos tweets al principio
-                for (int i = twits.size() - 1; i >= 0; i--) {
-                    String[] tweet = twits.get(i);
-                    String usuarioTweet = tweet[0];
-                    String texto = tweet[1];
-                    String fecha = tweet[2];
+        if (twits != null && !twits.isEmpty()) {
+            // Iterar en orden inverso para agregar los nuevos tweets al principio
+            for (int i = twits.size() - 1; i >= 0; i--) {
+                String[] tweet = twits.get(i);
+                String usuarioTweet = tweet[0];
+                String texto = tweet[1];
+                String fecha = tweet[2];
 
-                    long tiempoEnMilisegundos = Long.parseLong(fecha);
-                    Date fechadate = new Date(tiempoEnMilisegundos);
-                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String fechaFormateada = formatoFecha.format(fechadate);
+                long tiempoEnMilisegundos = Long.parseLong(fecha);
+                Date fechadate = new Date(tiempoEnMilisegundos);
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String fechaFormateada = formatoFecha.format(fechadate);
 
-                    Tweets twee = new Tweets(usuarioTweet, texto, fechaFormateada);
-                    panelmenciones.add(twee);
-                }
+                Tweets twee = new Tweets(usuarioTweet, texto, fechaFormateada);
+                panelmenciones.add(twee, i);// Agregar al principio del panel
             }
         }
+    }
 
         panelmenciones.revalidate();
         panelmenciones.repaint();

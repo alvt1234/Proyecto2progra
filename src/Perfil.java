@@ -45,11 +45,11 @@ public class Perfil extends javax.swing.JPanel {
         cantsiguiendo=new RandomAccessFile("Usertwit/"+userstwit.getUserlog()+"/cantsiguiendo.xd", "rw");
         lbseguidores1.setText(getseguidores()+" Seguidores");
         lbsiguiendo.setText(getsiguiendo()+" Siguiendo");
-        ImageIcon icono = foto.seticon(userstwit.getUserlog(), foto.getRutaImagen(), null,160,160);
+        ImageIcon icono = foto.seticon(userstwit.getUserlog(), foto.getRutaImagen(), null,155,155);
         if(icono==null){
         lbfoto.setIcon(icono);
         }else{
-            lbfoto.setIcon(userstwit.cargarFotoPerfil(userstwit.getUserlog(),160,160));
+            lbfoto.setIcon(userstwit.cargarFotoPerfil(userstwit.getUserlog(),150,150));
         }
             
         subirtweets();
@@ -138,9 +138,6 @@ private void subirtweets() throws IOException {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        lbfoto.setText("Foto");
-        lbfoto.setOpaque(true);
         add(lbfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 150));
 
         lbusuario.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N

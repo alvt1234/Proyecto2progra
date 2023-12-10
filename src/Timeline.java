@@ -102,7 +102,6 @@ public class Timeline extends javax.swing.JPanel {
         jScrollPane1.setViewportView(txttexto);
 
         lbfoto.setText("Foto");
-        lbfoto.setOpaque(true);
 
         jButton1.setBackground(new java.awt.Color(153, 204, 255));
         jButton1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
@@ -192,6 +191,7 @@ public class Timeline extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       String texto=txttexto.getText();
+      if(texto.length()<=140){
       if(!txttexto.getText().isEmpty()){
         try{
         logica.guardarTwit(texto);
@@ -212,6 +212,8 @@ public class Timeline extends javax.swing.JPanel {
       }else{
           JOptionPane.showMessageDialog(null, "Tweet vacio");
       }
+      }else
+          JOptionPane.showMessageDialog(null, "Mensaje muy largo");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txttextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttextoKeyTyped

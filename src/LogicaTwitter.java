@@ -79,7 +79,7 @@ public class LogicaTwitter {
     List<String> hashtags = new ArrayList<>();
     
     if (texto != null) {
-        String[] palabras = texto.split("\\s+"); // Dividir el texto en palabras usando espacios como separadores
+        String[] palabras = texto.split("\\s+"); 
 
         for (String palabra : palabras) {
             if (palabra.startsWith("#")) {
