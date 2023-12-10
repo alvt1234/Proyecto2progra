@@ -51,7 +51,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         if(icono==null){
         lbfoto.setIcon(icono);
         }else{
-            lbfoto.setIcon(users.cargarFotoPerfil(use,155,155));
+            lbfoto.setIcon(users.cargarFotoPerfil(use,150,150));
         }
         if(buscar.textoboton(userseleccionado)){
             contar++;

@@ -252,7 +252,7 @@ public class MenuTwitter extends javax.swing.JFrame {
             registro.readBoolean();
             
             if(usuario.equals(users.getUserlog())){
-             Perfil perfil=new Perfil(name,genero,edad, fecha);
+             Perfil perfil=new Perfil(this,name,genero,edad, fecha);
              crearpaneles(perfil);
             }
          }

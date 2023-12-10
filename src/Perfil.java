@@ -27,14 +27,16 @@ public class Perfil extends javax.swing.JPanel {
     private String name,use,fec;
     private char ge;
     private int age,contar=0;
+    private MenuTwitter menu;
     //private RandomAccessFile twits;
     private ArrayList<String[]> twits;
-    public Perfil(String nombre,char genero,int edad,String fecha) {
+    public Perfil(MenuTwitter menu, String nombre,char genero,int edad,String fecha) {
         initComponents();
         this.name=nombre;
         this.ge=genero;
         this.age=edad;
         this.fec=fecha;
+        this.menu=menu;
         lbusuario.setText("@"+userstwit.getUserlog());
         lbname1.setText(name);
         lbgenero.setText("Genero "+ge);
@@ -207,20 +209,20 @@ private void subirtweets() throws IOException {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbseguidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbseguidoresMouseClicked
-       /* try{
-        int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta segura de desactivar su cuenta? ");
+        try{
+        int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta seguro de desactivar su cuenta? ");
          if (opcion == JOptionPane.YES_OPTION) {
          JOptionPane.showMessageDialog(null, "Su cuenta ha sido desactivada");
              userstwit.desaccuenta();
-             LoginTwitter login=new LoginTwitter();
-        login.setVisible(true);
+             login.setVisible(true);
+             menu.dispose();
         } else if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CANCEL_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
              System.out.println("no cerro xd");
         } 
         
         }catch(IOException e){
-            
-        }*/
+            System.out.println("no se desactivo");
+        }
     }//GEN-LAST:event_lbseguidoresMouseClicked
 
 

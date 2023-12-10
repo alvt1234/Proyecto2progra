@@ -37,6 +37,7 @@ public class UsersTwit {
             registro.readInt();
             registro.readUTF();
             registro.readBoolean();
+            //System.out.println("usuario "+usuario+" thisactivo "+activo);
             if (user.equals(usuario)) {
                 return true;
             }
@@ -82,71 +83,94 @@ public class UsersTwit {
             String password=registro.readUTF();
             registro.readInt();
             registro.readUTF();
-            registro.readBoolean();
+            boolean activa=registro.readBoolean();
+             System.out.println("usuario: "+usuario+"activa: "+activa);
             if(user.equals(usuario.trim()) && contra.equals(password.trim())){
-                userlog=user;
-                return true;
-            }
-                
+               if(activa){
+                   userlog=user;
+                   return true;
+               }else{
+                   JOptionPane.showMessageDialog(null, "cuenta desac");
+                   activarcuenta(user);
+                   return false;
+               }
+            } 
+            
                  
          }
            JOptionPane.showMessageDialog(null, "Usuario inexistente");
          return false;
      }
   
-  /*  public void fotoperfil(String user, File fotoperfil) throws IOException {
-    // Obtener la ruta de la foto
-    String rutafoto = fotoperfil.getAbsolutePath();
-
-    // Crear un archivo separado para las fotos de perfil
-    String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";
-    try (RandomAccessFile archivoFotoPerfil = new RandomAccessFile(rutaArchivoFoto, "rw")) {
-        archivoFotoPerfil.writeUTF(rutafoto);
-    }
-}
-    public String enviarfoto(String user) throws IOException{
-      String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";  
-      RandomAccessFile archivoFotoPerfil = new RandomAccessFile(rutaArchivoFoto, "rw");
-       String foto= archivoFotoPerfil.readUTF();
-       return foto;
-    }*/
- /*   public void guardarFotoPerfil(String user,byte[] imagenBytes) throws IOException {
-        String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";  
-        Path pathArchivo = Path.of(rutaArchivoFoto);
-        Files.write(pathArchivo, imagenBytes);
-    }
-
-    public ImageIcon cargarFotoPerfil(String user,int ancho,int alto) throws IOException {
-    String rutaArchivoFoto = "Usertwit/" + user + "/foto.twc";
-    Path pathArchivo = Path.of(rutaArchivoFoto);
-    byte[] bytes = Files.readAllBytes(pathArchivo);
-    Image img = Toolkit.getDefaultToolkit().createImage(bytes);
-    Image scaledImg = img.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-    return new ImageIcon(scaledImg);
-}*/
-
+ 
     public String getUserlog() {
         return userlog;
     }
-    public boolean desaccuenta()throws IOException{
-       while(registro.getFilePointer() < registro.length()){
-            registro.readUTF();
-            registro.readChar();
-            String usuario=registro.readUTF();
-            registro.readUTF();
-            registro.readInt();
-            registro.readUTF();
-            registro.readBoolean();
-            if(usuario.equals(userlog)){
-                registro.writeBoolean(false);
-                return true;
+    public void desaccuenta() throws IOException {
+    RandomAccessFile tempFile = new RandomAccessFile("Usertwit/user.twc", "rw");
+
+    try {
+        while (registro.getFilePointer() < registro.length()) {
+            String nombre = registro.readUTF();
+            char genero = registro.readChar();
+            String usuario = registro.readUTF();
+            String contra = registro.readUTF();
+            int edad = registro.readInt();
+            String fecha = registro.readUTF();
+            boolean activa = registro.readBoolean();
+
+            if (userlog.equals(usuario)) {
+                tempFile.seek(tempFile.getFilePointer()); // Retroceder para sobrescribir el booleano activo
+                tempFile.writeBoolean(false); // Desactivar la cuenta
+                
             }
-                 
-         } 
-       return false;
+
+            tempFile.writeUTF(nombre);
+            tempFile.writeChar(genero);
+            tempFile.writeUTF(usuario);
+            tempFile.writeUTF(contra);
+            tempFile.writeInt(edad);
+            tempFile.writeUTF(fecha);
+            tempFile.writeBoolean(activa);
+        }
+    } finally {
+        registro.close(); // Cerrar el archivo original
+        tempFile.close(); // Cerrar el archivo temporal
     }
-    
-    
+}
+public void activarcuenta(String user) throws IOException {
+    RandomAccessFile tempFile = new RandomAccessFile("Usertwit/user.twc", "rw");
+
+    try {
+        while (registro.getFilePointer() < registro.length()) {
+            String nombre = registro.readUTF();
+            char genero = registro.readChar();
+            String usuario = registro.readUTF();
+            String contra = registro.readUTF();
+            int edad = registro.readInt();
+            String fecha = registro.readUTF();
+            boolean activa = registro.readBoolean();
+
+            if (user.equals(usuario)) {
+                tempFile.seek(tempFile.getFilePointer()); // Retroceder para sobrescribir el booleano activo
+                tempFile.writeBoolean(true); // Activar la cuenta
+            }
+
+            // Continuar escribiendo los demás datos
+            tempFile.writeUTF(nombre);
+            tempFile.writeChar(genero);
+            tempFile.writeUTF(usuario);
+            tempFile.writeUTF(contra);
+            tempFile.writeInt(edad);
+            tempFile.writeUTF(fecha);
+            tempFile.writeBoolean(activa);
+        }
+    } finally {
+        registro.close(); // Cerrar el archivo original
+        tempFile.close(); // Cerrar el archivo temporal
+    }
+}
+
     public String[] obtenerUsuarios() throws IOException{
         ArrayList<String> usuarios = new ArrayList<>();
         registro.seek(0);
@@ -221,6 +245,7 @@ public class UsersTwit {
     Image imgRedonda = redondearImagen(img);
     return new ImageIcon(imgRedonda);
 }
+
 
      
 }
