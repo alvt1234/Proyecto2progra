@@ -89,7 +89,6 @@ public class buscarhashtag extends javax.swing.JPanel {
         paneltweets = new javax.swing.JPanel();
         scrollhash = new javax.swing.JScrollPane();
         listahash = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
         lbhash = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -114,7 +113,9 @@ public class buscarhashtag extends javax.swing.JPanel {
         });
         jPanel1.add(txttexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 290, 40));
 
+        scrolltweets.setBorder(null);
         scrolltweets.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrolltweets.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         paneltweets.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -122,7 +123,7 @@ public class buscarhashtag extends javax.swing.JPanel {
         paneltweets.setLayout(paneltweetsLayout);
         paneltweetsLayout.setHorizontalGroup(
             paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
         paneltweetsLayout.setVerticalGroup(
             paneltweetsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,19 +132,13 @@ public class buscarhashtag extends javax.swing.JPanel {
 
         scrolltweets.setViewportView(paneltweets);
 
-        jPanel1.add(scrolltweets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 650, 680));
+        jPanel1.add(scrolltweets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 700, 680));
 
         listahash.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         listahash.setForeground(new java.awt.Color(102, 153, 255));
         scrollhash.setViewportView(listahash);
 
         jPanel1.add(scrollhash, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 290, 80));
-
-        jButton1.setBackground(new java.awt.Color(51, 204, 255));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 100, 30));
 
         lbhash.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbhash.setForeground(new java.awt.Color(0, 153, 255));
@@ -208,7 +203,6 @@ public class buscarhashtag extends javax.swing.JPanel {
      }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbhash;
     private javax.swing.JLabel lbname2;

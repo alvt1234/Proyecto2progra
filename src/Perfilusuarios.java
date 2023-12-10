@@ -51,7 +51,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         if(icono==null){
         lbfoto.setIcon(icono);
         }else{
-            lbfoto.setIcon(users.cargarFotoPerfil(use,150,150));
+            lbfoto.setIcon(users.cargarFotoPerfil(use,145,145));
         }
         if(buscar.textoboton(userseleccionado)){
             contar++;
@@ -101,7 +101,7 @@ public class Perfilusuarios extends javax.swing.JPanel {
         jPanel1.add(lbuserlog, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         lbfoto.setText("Foto");
-        jPanel1.add(lbfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 140));
+        jPanel1.add(lbfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 150, 150));
 
         lbname2.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lbname2.setText("Tweets");
