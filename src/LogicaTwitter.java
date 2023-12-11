@@ -158,7 +158,7 @@ public ArrayList<String> leerHashtagsDesdeArchivo() throws IOException {
 public ArrayList<String[]> cargarTwitsmencion(String user,String texto) throws IOException {
     ArrayList<String[]> twts = new ArrayList<>();
 
-    if (Twitspersonahash(user,texto) != null ) {
+    if (Twitspersonahash(user,texto) != null && !this.user.desac(user)) {
         twts.addAll(Twitspersonahash(user,texto));
     }
 

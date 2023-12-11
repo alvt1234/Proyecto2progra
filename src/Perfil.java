@@ -107,7 +107,7 @@ private void subirtweets() throws IOException {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String fechaFormateada = formatoFecha.format(fechadate);
 
-            if(usuario.equals(userstwit.getUserlog())){
+            if(usuario.equals(userstwit.getUserlog()) ){
             Tweets twee = new Tweets(usuario, texto, fechaFormateada);
             paneltweets.add(twee);
             }
@@ -228,7 +228,7 @@ private void subirtweets() throws IOException {
         int opcion=JOptionPane.showInternalConfirmDialog(null, "Esta seguro de desactivar su cuenta? ");
          if (opcion == JOptionPane.YES_OPTION) {
          JOptionPane.showMessageDialog(null, "Su cuenta ha sido desactivada");
-             userstwit.desaccuenta();
+             userstwit.desaccuenta(userstwit.getUserlog());
              login.setVisible(true);
              menu.dispose();
         } else if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CANCEL_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
@@ -236,6 +236,7 @@ private void subirtweets() throws IOException {
         } 
         
         }catch(IOException e){
+            e.printStackTrace();
             System.out.println("no se desactivo");
         }
     }//GEN-LAST:event_lbseguidoresMouseClicked
@@ -262,6 +263,7 @@ private void mostrarVentanaSugerencias() throws IOException{
    
     // Asociar el menú emergente al componente de texto
        for (String sugerencia : sugerencias){
+           if(!userstwit.desac(sugerencia)){
         System.out.println("datos1"+sugerencias);
         JMenuItem menuItem = new JMenuItem(sugerencia);
         menuItem.setBackground(Color.WHITE);
@@ -280,6 +282,7 @@ private void mostrarVentanaSugerencias() throws IOException{
         });
         
         popupSugerencias.add(menuItem);
+           }
     }
    // popupSugerencias.setInvoker(txttexto);
 

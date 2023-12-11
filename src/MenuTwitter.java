@@ -336,7 +336,7 @@ public class MenuTwitter extends javax.swing.JFrame {
     if (!resultados.isEmpty()) {
         for (String usuario : resultados) {
             // Verificar si el usuario contiene la letra escrita
-            if (!usuario.equalsIgnoreCase(users.getUserlog())&& usuario.toLowerCase().contains(texto.toLowerCase())) {
+            if (!usuario.equalsIgnoreCase(users.getUserlog())&& usuario.toLowerCase().contains(texto.toLowerCase()) && !users.desac(usuario)) {
                 resultBuilder.append(usuario).append("\n");
             }
         }
@@ -358,7 +358,7 @@ public class MenuTwitter extends javax.swing.JFrame {
             String date=registro.readUTF();
             registro.readBoolean();
             System.out.println("antes del if");
-            if(user.equals(usuario)){
+            if(user.equals(usuario) && !users.desac(user)){
                 System.out.println("entra al if");
                 System.out.println("nombre: "+nombre+" user "+user);
                 Perfilusuarios perfil=new Perfilusuarios(nombre, gene, edad, usuario, date);

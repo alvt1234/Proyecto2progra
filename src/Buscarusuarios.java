@@ -199,7 +199,7 @@ public class Buscarusuarios {
                 }
             }
         }
-    }
+    }//eliminar siguiendo
      private void eliminarEntrada(String filePath, String target) throws IOException {
         try (RandomAccessFile file = new RandomAccessFile(filePath, "rw")) {
             ArrayList<String> lines = new ArrayList<>();
@@ -262,7 +262,7 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
     ArrayList<String[]> twts = new ArrayList<>();
 
     // Carga los propios twits
-    if (Twitspersonas(user) != null) {
+    if (Twitspersonas(user) != null && !users.desac(user)) {
         twts.addAll(Twitspersonas(user));
     }
 
@@ -340,7 +340,7 @@ public ArrayList<String[]> cargarTwits(String user) throws IOException {
 public ArrayList<String[]> cargarTwitsmencion(String user) throws IOException {
     ArrayList<String[]> twts = new ArrayList<>();
 
-    if (Twitspersonasmencion(user) != null ) {
+    if (Twitspersonasmencion(user) != null  && !users.desac(user)) {
         twts.addAll(Twitspersonasmencion(user));
     }
 

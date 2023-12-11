@@ -252,6 +252,7 @@ public class Timeline extends javax.swing.JPanel {
    
     // Asociar el menú emergente al componente de texto
        for (String sugerencia : sugerencias){
+           if(!user.desac(sugerencia)){
         System.out.println("datos"+sugerencias);
         JMenuItem menuItem = new JMenuItem(sugerencia);
         menuItem.setBackground(Color.WHITE);
@@ -263,6 +264,7 @@ public class Timeline extends javax.swing.JPanel {
         });
 
         popupSugerencias.add(menuItem);
+           }
     }
     popupSugerencias.setInvoker(txttexto);
 
@@ -292,7 +294,7 @@ private ArrayList<String> obtenerSugerencias(String mencion) throws IOException 
         if (!resultados.isEmpty()) {
             for (String usuario : resultados) {
                 // Verificar si el usuario contiene la letra escrita
-                if (!usuario.equalsIgnoreCase(user.getUserlog()) && usuario.toLowerCase().contains(mencion.toLowerCase())) {
+                if (!usuario.equalsIgnoreCase(user.getUserlog()) && usuario.toLowerCase().contains(mencion.toLowerCase()) && !user.desac(usuario)) {
                  sugerencias.add(usuario);
                    
                 }

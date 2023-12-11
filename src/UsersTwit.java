@@ -4,7 +4,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
@@ -101,72 +104,40 @@ public class UsersTwit {
     public String getUserlog() {
         return userlog;
     }
-    public void desaccuenta() throws IOException {
-    RandomAccessFile tempFile = new RandomAccessFile("Usertwit/user.twc", "rw");
-
-    try {
-        while (registro.getFilePointer() < registro.length()) {
-            String nombre = registro.readUTF();
-            char genero = registro.readChar();
-            String usuario = registro.readUTF();
-            String contra = registro.readUTF();
-            int edad = registro.readInt();
-            String fecha = registro.readUTF();
-            boolean activa = registro.readBoolean();
-
-            if (userlog.equals(usuario)) {
-                tempFile.seek(tempFile.getFilePointer()-1); // Retroceder para sobrescribir el booleano activo
-                tempFile.writeBoolean(false); // Desactivar la cuenta
-              
-                break;
+    
+    public void desaccuenta(String user) throws IOException{
+            try(FileWriter desac=new FileWriter("Usertwit/"+user+"/desc.br")){
+                desac.write(user);
             }
-
-            tempFile.writeUTF(nombre);
-            tempFile.writeChar(genero);
-            tempFile.writeUTF(usuario);
-            tempFile.writeUTF(contra);
-            tempFile.writeInt(edad);
-            tempFile.writeUTF(fecha);
-            tempFile.writeBoolean(activa);
-        }
-    } finally {
-        registro.close(); // Cerrar el archivo original
-        tempFile.close(); // Cerrar el archivo temporal
     }
-}
-public void activarcuenta(String user) throws IOException {
-    RandomAccessFile tempFile = new RandomAccessFile("Usertwit/user.twc", "rw");
-
-    try {
-        while (registro.getFilePointer() < registro.length()) {
-            String nombre = registro.readUTF();
-            char genero = registro.readChar();
-            String usuario = registro.readUTF();
-            String contra = registro.readUTF();
-            int edad = registro.readInt();
-            String fecha = registro.readUTF();
-            boolean activa = registro.readBoolean();
-
-            if (user.equals(usuario)) {
-                tempFile.seek(tempFile.getFilePointer()-1); // Retroceder para sobrescribir el booleano activo
-                tempFile.writeBoolean(true); // Activar la cuenta
-                  JOptionPane.showMessageDialog(null, "Se reactivo su cuenta");
+    public void activar(String user) throws IOException {
+        File file = new File("Usertwit/" + user + "/desc.br");
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String usuarioEnArchivo = br.readLine();
+                System.out.println("user: "+user+" usuario en archivo: "+usuarioEnArchivo);
+                if (user.equals(usuarioEnArchivo)) {
+                    br.close();
+                    if (file.delete()) {
+                       JOptionPane.showMessageDialog(null, "Bienvenido de nuevo!");
+                    } else {
+                        System.out.println("No se pudo eliminar el archivo " + file.getName());
+                    }
+                } else {
+                    System.out.println("El usuario en el archivo no coincide con el usuario proporcionado.");
+                }
             }
-
-            // Continuar escribiendo los demás datos
-            tempFile.writeUTF(nombre);
-            tempFile.writeChar(genero);
-            tempFile.writeUTF(usuario);
-            tempFile.writeUTF(contra);
-            tempFile.writeInt(edad);
-            tempFile.writeUTF(fecha);
-            tempFile.writeBoolean(activa);
+        } else {
+            System.out.println("El archivo " + file.getName() + " no existe.");
         }
-    } finally {
-        registro.close(); // Cerrar el archivo original
-        tempFile.close(); // Cerrar el archivo temporal
     }
-}
+    public boolean desac(String user){
+      File file = new File("Usertwit/" + user + "/desc.br");
+        if (file.exists())
+            return true;
+        return false;
+    }
+
 
     public String[] obtenerUsuarios() throws IOException{
         ArrayList<String> usuarios = new ArrayList<>();

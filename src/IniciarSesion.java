@@ -198,6 +198,7 @@ public class IniciarSesion extends javax.swing.JFrame {
             UsersTwit usertwit=new UsersTwit();
           try{  
        if(usertwit.iniciosesion(user, contra) ){ 
+           usertwit.activar(user);
        MenuTwitter menu=new MenuTwitter();
        menu.setVisible(true);
        dispose();
