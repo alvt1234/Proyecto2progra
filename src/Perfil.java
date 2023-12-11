@@ -241,8 +241,14 @@ private void subirtweets() throws IOException {
     }//GEN-LAST:event_lbseguidoresMouseClicked
 
     private void lbsiguiendoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbsiguiendoMouseClicked
-      try{
-        mostrarVentanaSugerencias();
+      contar++;
+        try{
+            if(contar==1)
+            mostrarVentanaSugerencias();
+            else{
+            ocultarVentanaSugerencias();
+              contar=0;
+            }
       }catch(IOException e){
           System.out.println("No se pudo mostrar la ventana");
       }
@@ -256,11 +262,14 @@ private void mostrarVentanaSugerencias() throws IOException{
    
     // Asociar el menú emergente al componente de texto
        for (String sugerencia : sugerencias){
-        System.out.println("datos"+sugerencias);
+        System.out.println("datos1"+sugerencias);
         JMenuItem menuItem = new JMenuItem(sugerencia);
         menuItem.setBackground(Color.WHITE);
+           System.out.println("despues del menu item");
         listaSugerencias.addListSelectionListener(e -> {
-             if (!e.getValueIsAdjusting()) {       
+            System.out.println("en el addlist");
+             if (!e.getValueIsAdjusting()) {  
+                 System.out.println("despues del if en click");
             nombre=listaSugerencias.getSelectedValue();
             try{
             menu.buscarparaelperfil(nombre);
@@ -269,7 +278,7 @@ private void mostrarVentanaSugerencias() throws IOException{
             }
             }
         });
-
+        
         popupSugerencias.add(menuItem);
     }
    // popupSugerencias.setInvoker(txttexto);
@@ -283,6 +292,10 @@ private void mostrarVentanaSugerencias() throws IOException{
         popupSugerencias.show(lbsiguiendo, 35, 23);
         lbsiguiendo.requestFocusInWindow(); // Asegurar que el componente mantenga el foco
     }
+}
+private void ocultarVentanaSugerencias() {
+    popupSugerencias.setVisible(false);
+    lbsiguiendo.requestFocusInWindow(); // Asegurar que el editor pane mantenga el foco
 }
 
 

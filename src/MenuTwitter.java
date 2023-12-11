@@ -347,7 +347,7 @@ public class MenuTwitter extends javax.swing.JFrame {
 }
 
     public boolean buscarparaelperfil(String user) throws IOException{
-        
+        System.out.println("entra al buscar");
         try (RandomAccessFile registro = new RandomAccessFile("Usertwit/user.twc", "rw")) {
         while (registro.getFilePointer() < registro.length()) {
             String nombre=registro.readUTF();
@@ -357,9 +357,10 @@ public class MenuTwitter extends javax.swing.JFrame {
             int edad=registro.readInt();
             String date=registro.readUTF();
             registro.readBoolean();
-
+            System.out.println("antes del if");
             if(user.equals(usuario)){
-                System.out.println("nombre: "+nombre);
+                System.out.println("entra al if");
+                System.out.println("nombre: "+nombre+" user "+user);
                 Perfilusuarios perfil=new Perfilusuarios(nombre, gene, edad, usuario, date);
                 crearpaneles(perfil);
                 txtbuscar.setText("Buscar");
