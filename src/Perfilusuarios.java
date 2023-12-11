@@ -1,4 +1,8 @@
 
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
@@ -6,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 
 
@@ -16,10 +23,12 @@ import javax.swing.JScrollBar;
  */
 public class Perfilusuarios extends javax.swing.JPanel {
 
+    
     private String name,use,fec,estado="Seguir";
     private char ge;
     private int age,contar=0;
     private RandomAccessFile siguiendo,seguidores,tweets;
+    
     LoginTwitter login=new LoginTwitter();
     Foto foto=new Foto(login);
     UsersTwit users=new UsersTwit();
@@ -67,7 +76,6 @@ public class Perfilusuarios extends javax.swing.JPanel {
         
     }
  
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

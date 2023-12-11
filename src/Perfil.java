@@ -1,5 +1,9 @@
 
+import java.awt.Color;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
@@ -8,7 +12,10 @@ import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 
 
@@ -24,7 +31,9 @@ public class Perfil extends javax.swing.JPanel {
     UsersTwit userstwit=new UsersTwit();
     Foto foto=new Foto(login);
     Buscarusuarios buscar=new Buscarusuarios(userstwit);
-    private String name,use,fec;
+    private JList<String> listaSugerencias = new JList<>();
+     private JPopupMenu popupSugerencias;
+    private String name,use,fec,nombre;
     private char ge;
     private int age,contar=0;
     private MenuTwitter menu;
@@ -37,6 +46,7 @@ public class Perfil extends javax.swing.JPanel {
         this.age=edad;
         this.fec=fecha;
         this.menu=menu;
+        popupSugerencias=new JPopupMenu();
         lbusuario.setText("@"+userstwit.getUserlog());
         lbname1.setText(name);
         lbgenero.setText("Genero "+ge);
@@ -231,8 +241,51 @@ private void subirtweets() throws IOException {
     }//GEN-LAST:event_lbseguidoresMouseClicked
 
     private void lbsiguiendoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbsiguiendoMouseClicked
-       
+      try{
+        mostrarVentanaSugerencias();
+      }catch(IOException e){
+          System.out.println("No se pudo mostrar la ventana");
+      }
     }//GEN-LAST:event_lbsiguiendoMouseClicked
+private void mostrarVentanaSugerencias() throws IOException{
+    ArrayList<String> sugerencias = buscar.cargartwitseg();
+   
+    listaSugerencias.setListData(sugerencias.toArray(new String[0]));
+    
+    popupSugerencias.removeAll();
+   
+    // Asociar el menú emergente al componente de texto
+       for (String sugerencia : sugerencias){
+        System.out.println("datos"+sugerencias);
+        JMenuItem menuItem = new JMenuItem(sugerencia);
+        menuItem.setBackground(Color.WHITE);
+        listaSugerencias.addListSelectionListener(e -> {
+             if (!e.getValueIsAdjusting()) {       
+            nombre=listaSugerencias.getSelectedValue();
+            try{
+            menu.buscarparaelperfil(nombre);
+            }catch(IOException ex){
+                System.out.println("no se pudo cargar el perfil");
+            }
+            }
+        });
+
+        popupSugerencias.add(menuItem);
+    }
+   // popupSugerencias.setInvoker(txttexto);
+
+
+    Point posicion = lbsiguiendo.getLocationOnScreen();
+    if (posicion != null) {
+        int x = posicion.x;
+        int y = posicion.y + lbsiguiendo.getHeight() ; // Ajusta la posición vertical
+
+        popupSugerencias.show(lbsiguiendo, 35, 23);
+        lbsiguiendo.requestFocusInWindow(); // Asegurar que el componente mantenga el foco
+    }
+}
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
