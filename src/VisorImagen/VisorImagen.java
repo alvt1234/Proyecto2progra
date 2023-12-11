@@ -8,8 +8,7 @@ package VisorImagen;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +38,6 @@ public class VisorImagen extends JFrame {
         mainImageLabel = new JLabel();
         previousImageLabel = new JLabel();
         nextImageLabel = new JLabel();
-
-        updateImages();
 
         JButton prevButton = new JButton("Anterior");
         JButton nextButton = new JButton("Siguiente");
@@ -80,8 +77,19 @@ public class VisorImagen extends JFrame {
 
         add(imagePanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+
+        // Agregar ComponentListener al mainImageLabel
+        mainImageLabel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateImages();
+            }
+        });
+
+        // Llamar a updateImages después de la inicialización
+        updateImages();
     }
-    
+
     private static class CarpetaVaciaException extends RuntimeException {
         public CarpetaVaciaException(String message) {
             super(message);
@@ -89,7 +97,7 @@ public class VisorImagen extends JFrame {
     }
 
     private void seleccionarCarpeta() {
-         JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         chooser.setDialogTitle("Seleccionar Carpeta de Imagenes");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -99,7 +107,7 @@ public class VisorImagen extends JFrame {
             imagePaths = loadImages(folderPath);
 
             if (imagePaths.isEmpty()) {
-                throw new CarpetaVaciaException("La carpeta no contiene imágenes.");
+                throw new CarpetaVaciaException("La carpeta no contiene imagenes.");
             }
 
             currentIndex = 0;
@@ -136,33 +144,33 @@ public class VisorImagen extends JFrame {
         return false;
     }
 
-   private void updateImages() {
-    if (!imagePaths.isEmpty() && currentIndex >= 0 && currentIndex < imagePaths.size()) {
-        String currentImagePath = imagePaths.get(currentIndex);
+    private void updateImages() {
+        if (!imagePaths.isEmpty() && currentIndex >= 0 && currentIndex < imagePaths.size()) {
+            String currentImagePath = imagePaths.get(currentIndex);
 
-        // Obtener las dimensiones del contenedor principal
-        int mainImageWidth = mainImageLabel.getWidth();
-        int mainImageHeight = mainImageLabel.getHeight();
+            // Obtener las dimensiones del contenedor principal
+            int mainImageWidth = mainImageLabel.getWidth();
+            int mainImageHeight = mainImageLabel.getHeight();
 
-        // Escalar la imagen principal proporcionalmente
-        ImageIcon currentIcon = new ImageIcon(currentImagePath);
-        mainImageLabel.setIcon(scaleImage(currentIcon, mainImageWidth, mainImageHeight));
+            // Escalar la imagen principal proporcionalmente
+            ImageIcon currentIcon = new ImageIcon(currentImagePath);
+            mainImageLabel.setIcon(scaleImage(currentIcon, mainImageWidth, mainImageHeight));
 
-        // Miniatura anterior
-        int previousIndex = (currentIndex - 1 + imagePaths.size()) % imagePaths.size();
-        ImageIcon previousIcon = new ImageIcon(imagePaths.get(previousIndex));
-        previousImageLabel.setIcon(scaleImage(previousIcon, 100, 100));
+            // Miniatura anterior
+            int previousIndex = (currentIndex - 1 + imagePaths.size()) % imagePaths.size();
+            ImageIcon previousIcon = new ImageIcon(imagePaths.get(previousIndex));
+            previousImageLabel.setIcon(scaleImage(previousIcon, 100, 100));
 
-        // Miniatura siguiente
-        int nextIndex = (currentIndex + 1) % imagePaths.size();
-        ImageIcon nextIcon = new ImageIcon(imagePaths.get(nextIndex));
-        nextImageLabel.setIcon(scaleImage(nextIcon, 100, 100));
-    } else {
-        mainImageLabel.setIcon(null);
-        previousImageLabel.setIcon(null);
-        nextImageLabel.setIcon(null);
+            // Miniatura siguiente
+            int nextIndex = (currentIndex + 1) % imagePaths.size();
+            ImageIcon nextIcon = new ImageIcon(imagePaths.get(nextIndex));
+            nextImageLabel.setIcon(scaleImage(nextIcon, 100, 100));
+        } else {
+            mainImageLabel.setIcon(null);
+            previousImageLabel.setIcon(null);
+            nextImageLabel.setIcon(null);
+        }
     }
-}
 
     private void anteriorImagen() {
         if (!imagePaths.isEmpty()) {
@@ -183,13 +191,10 @@ public class VisorImagen extends JFrame {
             // Evitar dimensiones no válidas
             return icon;
         }
-        
 
         Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
-    
-    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
