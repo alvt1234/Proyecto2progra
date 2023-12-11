@@ -167,6 +167,11 @@ private void subirtweets() throws IOException {
 
         lbsiguiendo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbsiguiendo.setText("0 Siguiendo");
+        lbsiguiendo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbsiguiendoMouseClicked(evt);
+            }
+        });
         add(lbsiguiendo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 90, 30));
 
         lbseguidores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -224,6 +229,10 @@ private void subirtweets() throws IOException {
             System.out.println("no se desactivo");
         }
     }//GEN-LAST:event_lbseguidoresMouseClicked
+
+    private void lbsiguiendoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbsiguiendoMouseClicked
+       
+    }//GEN-LAST:event_lbsiguiendoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

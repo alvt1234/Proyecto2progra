@@ -48,7 +48,7 @@ public class Interacciones extends javax.swing.JPanel {
                 String fechaFormateada = formatoFecha.format(fechadate);
 
                 Tweets twee = new Tweets(usuarioTweet, texto, fechaFormateada);
-                panelmenciones.add(twee, i);// Agregar al principio del panel
+                panelmenciones.add(twee);// Agregar al principio del panel
             }
         }
     }
